@@ -1,0 +1,7 @@
+{
+  "produced.label": "產物",
+  "produced.more": "+ {count} 個檔案",
+  "produced.moreOne": "+ 1 個檔案",
+  "produced.open": "開啟 {name}",
+  "produced.showInFolder": "在資料夾中顯示"
+}

@@ -1,0 +1,6 @@
+{
+  "chip.on.aria": "plan mode 켜짐, 누르면 꺼집니다",
+  "chip.on.title": "plan mode 켜짐 — 클릭하면 꺼집니다(/plan off)",
+  "chip.off.aria": "plan mode 꺼짐, 누르면 켜집니다",
+  "chip.off.title": "plan mode 꺼짐 — 클릭하면 켜집니다(/plan)"
+}

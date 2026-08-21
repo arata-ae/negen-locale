@@ -1,0 +1,7 @@
+{
+  "produced.label": "산출물",
+  "produced.moreOne": "+ 파일 1개",
+  "produced.more": "+ 파일 {count}개",
+  "produced.open": "{name} 열기",
+  "produced.showInFolder": "폴더에서 보기"
+}

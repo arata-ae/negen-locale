@@ -1,0 +1,12 @@
+{
+  "catalog": "外掛列表",
+  "configuration": "設定狀態",
+  "empty": "暫無外掛。",
+  "emptySearch": "沒有相符的外掛。",
+  "error": "暫時無法讀取外掛。",
+  "loading": "正在讀取外掛…",
+  "loadingPhase": "載入中",
+  "search": "搜尋外掛",
+  "tab": "外掛列表",
+  "unloading": "解除安裝中"
+}

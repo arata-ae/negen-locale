@@ -1,0 +1,16 @@
+{
+  "view.trajectory": "트라젝터리",
+  "toolbar.aria": "트라젝터리 도구 모음",
+  "toolbar.duration": "시간축",
+  "toolbar.useActualDuration": "실제 시간으로 표시",
+  "toolbar.useEqualWidth": "작업을 같은 너비로 표시",
+  "toolbar.actualTime": "실제 시간",
+  "toolbar.turns": "턴",
+  "toolbar.expandTurns": "턴 펼치기",
+  "toolbar.collapseTurns": "턴 접기",
+  "toolbar.calls": "호출",
+  "toolbar.expandCalls": "호출 펼치기",
+  "toolbar.collapseCalls": "호출 접기",
+  "toolbar.search": "트라젝터리 검색",
+  "toolbar.searchPlaceholder": "검색"
+}

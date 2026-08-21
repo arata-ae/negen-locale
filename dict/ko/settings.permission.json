@@ -1,0 +1,11 @@
+{
+  "confirm.acknowledge": "위험을 이해했으며 계속 진행합니다",
+  "confirm.cancel": "취소",
+  "confirm.description": "전체 액세스를 켜면 새 세션이 확인 단계를 줄이고, 민감한 작업이나 파일 변경, 외부 명령 실행을 포함한 더 많은 작업을 직접 수행할 수 있습니다. 이후 작업을 신뢰할 수 있을 때만 사용하세요.",
+  "confirm.enable": "전체 액세스 사용",
+  "confirm.title": "전체 액세스를 사용하시겠습니까?",
+  "description": "새 세션에 적용할 기본 권한 모드를 선택합니다",
+  "loading": "불러오는 중",
+  "title": "권한",
+  "unavailable": "사용할 수 없음"
+}

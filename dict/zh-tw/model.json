@@ -1,0 +1,10 @@
+{
+  "action.reload": "重新載入",
+  "blocked.composer": "目前模型不可用，請先選擇模型",
+  "empty.efforts": "目前模型未提供推理等級。",
+  "option.loadError": "目錄載入失敗：{message}",
+  "status.loading": "正在重新整理模型列表…",
+  "trigger.aria": "選擇模型，目前 {model}",
+  "trigger.ariaEffort": "選擇模型，目前 {model}，推理等級 {effort}",
+  "warning.groupLoad": "{name} 載入失敗：{message}"
+}

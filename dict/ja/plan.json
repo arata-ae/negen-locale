@@ -1,0 +1,6 @@
+{
+  "chip.on.aria": "plan mode オン、押すとオフになります",
+  "chip.on.title": "plan mode オン — クリックでオフ（/plan off）",
+  "chip.off.aria": "plan mode オフ、押すとオンになります",
+  "chip.off.title": "plan mode オフ — クリックでオン（/plan）"
+}

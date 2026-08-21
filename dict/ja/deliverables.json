@@ -1,0 +1,7 @@
+{
+  "produced.label": "成果物",
+  "produced.moreOne": "+ 1 件のファイル",
+  "produced.more": "+ {count} 件のファイル",
+  "produced.open": "{name} を開く",
+  "produced.showInFolder": "フォルダーに表示"
+}

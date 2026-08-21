@@ -1,0 +1,15 @@
+{
+  "action.like": "좋은 답변",
+  "action.likeActive": "평가 취소",
+  "action.dislike": "아쉬운 답변",
+  "action.dislikeActive": "평가 취소",
+  "note.open": "메모 추가",
+  "note.dialog": "피드백",
+  "note.placeholder": "어떤 점이 좋았는지, 또는 무엇이 잘못되었는지 알려주세요 (선택)",
+  "note.save": "저장",
+  "note.cancel": "취소",
+  "note.aria": "피드백 메모",
+  "error.conflict": "이 피드백이 다른 곳에서 변경되어 최신 상태를 표시합니다",
+  "error.load": "피드백을 불러오지 못했습니다",
+  "error.generic": "피드백을 저장하지 못했습니다"
+}

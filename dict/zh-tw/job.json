@@ -1,0 +1,9 @@
+{
+  "count.idle.one": "{count} 個背景任務",
+  "count.idle.other": "{count} 個背景任務",
+  "count.live.one": "{count} 個背景任務執行中",
+  "count.live.other": "{count} 個背景任務執行中",
+  "duration.title.live": "已執行 {duration}",
+  "list.aria": "背景任務",
+  "status.running": "執行中"
+}

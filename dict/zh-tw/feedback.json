@@ -1,0 +1,9 @@
+{
+  "error.conflict": "這條回饋已在別處改動，已顯示最新狀態",
+  "error.generic": "回饋儲存失敗",
+  "error.load": "回饋狀態載入失敗",
+  "note.aria": "回饋說明",
+  "note.dialog": "回饋",
+  "note.placeholder": "這條回答哪裡好，或哪裡有問題？（可選）",
+  "note.save": "儲存"
+}

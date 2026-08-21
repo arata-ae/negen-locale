@@ -1,0 +1,17 @@
+{
+  "count.live.one": "バックグラウンドジョブ {count} 件を実行中",
+  "count.live.other": "バックグラウンドジョブ {count} 件を実行中",
+  "count.idle.one": "バックグラウンドジョブ {count} 件",
+  "count.idle.other": "バックグラウンドジョブ {count} 件",
+  "list.aria": "バックグラウンドジョブ",
+  "status.running": "実行中",
+  "status.stopping": "停止中",
+  "status.completed": "完了",
+  "status.killed": "キャンセル済み",
+  "status.failed": "失敗",
+  "duration.seconds": "{seconds}秒",
+  "duration.minutes": "{minutes}分{seconds}秒",
+  "duration.hours": "{hours}時間{minutes}分",
+  "duration.title.live": "{duration} 実行中",
+  "duration.title.done": "所要時間 {duration}"
+}

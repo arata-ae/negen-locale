@@ -1,0 +1,13 @@
+{
+  "activity.inactive": "目前未執行",
+  "activity.running": "正在執行",
+  "count.running.one": "{count} 個子代理，正在執行",
+  "count.running.other": "{count} 個子代理，正在執行",
+  "diagnostic.unsupported": "子代理記錄版本不受支援",
+  "load.error": "無法載入子代理",
+  "loading.aria": "正在載入子代理",
+  "loading.label": "正在載入子代理…",
+  "readonly.body": "父會話目前不在線，重新開啟父會話後即可繼續傳送訊息。",
+  "readonly.oneShot.body": "一次性任務不支援後續訊息，可在這裡檢視完整執行記錄。",
+  "readonly.title": "此子代理暫時唯讀"
+}

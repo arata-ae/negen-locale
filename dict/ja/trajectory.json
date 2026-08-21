@@ -1,0 +1,16 @@
+{
+  "view.trajectory": "トラジェクトリ",
+  "toolbar.aria": "トラジェクトリのツールバー",
+  "toolbar.duration": "時間軸",
+  "toolbar.useActualDuration": "実時間で表示",
+  "toolbar.useEqualWidth": "操作を等幅で表示",
+  "toolbar.actualTime": "実時間",
+  "toolbar.turns": "ターン",
+  "toolbar.expandTurns": "ターンを展開",
+  "toolbar.collapseTurns": "ターンを折りたたむ",
+  "toolbar.calls": "呼び出し",
+  "toolbar.expandCalls": "呼び出しを展開",
+  "toolbar.collapseCalls": "呼び出しを折りたたむ",
+  "toolbar.search": "トラジェクトリを検索",
+  "toolbar.searchPlaceholder": "検索"
+}

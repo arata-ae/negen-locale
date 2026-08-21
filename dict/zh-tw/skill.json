@@ -1,0 +1,7 @@
+{
+  "menu.userOnly": "僅使用者",
+  "row.failed": "skill 載入失敗",
+  "row.instructions": "說明",
+  "row.running": "正在載入 skill",
+  "row.stopped": "skill 載入已中止"
+}

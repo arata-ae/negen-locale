@@ -1,0 +1,8 @@
+{
+  "section.files": "파일 및 폴더",
+  "section.sessions": "세션 대화",
+  "candidate.file": "파일",
+  "candidate.folder": "폴더",
+  "candidate.session": "세션",
+  "candidate.noCwd": "(작업 디렉터리 없음)"
+}

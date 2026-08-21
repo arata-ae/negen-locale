@@ -1,0 +1,8 @@
+{
+  "section.files": "ファイルとフォルダ",
+  "section.sessions": "セッションの会話",
+  "candidate.file": "ファイル",
+  "candidate.folder": "フォルダ",
+  "candidate.session": "セッション",
+  "candidate.noCwd": "（作業ディレクトリなし）"
+}

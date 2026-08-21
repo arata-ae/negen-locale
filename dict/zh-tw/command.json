@@ -1,0 +1,10 @@
+{
+  "listbox.aria": "/{command} 相符項目",
+  "notice.imagesUnsupported": "/{command} 不接受圖片附件，請先移除圖片",
+  "overlay.aria": "/{command} 選項",
+  "search.aria": "篩選選項",
+  "search.placeholder": "搜尋…",
+  "status.applying": "正在套用…",
+  "status.empty": "無選項",
+  "status.loading": "正在載入選項…"
+}

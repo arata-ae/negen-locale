@@ -1,0 +1,10 @@
+{
+  "search.placeholder": "検索…",
+  "search.aria": "選択肢を絞り込む",
+  "status.loading": "選択肢を読み込み中…",
+  "status.applying": "適用中…",
+  "status.empty": "選択肢がありません",
+  "overlay.aria": "/{command} の選択肢",
+  "listbox.aria": "/{command} の一致項目",
+  "notice.imagesUnsupported": "/{command} は画像の添付に対応していません。先に画像を削除してください"
+}

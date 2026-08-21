@@ -1,0 +1,7 @@
+node_modules/
+src/client/backfill.generated.json
+*.tsbuildinfo
+.DS_Store
+
+# lib/ is deliberately committed: `dsh plugin --profile web add <git-url>`
+# installs this repo straight from git, with no build step on the far side.

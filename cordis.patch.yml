@@ -1,0 +1,17 @@
+# @negen/locale composes over the dsh-web-app bundle layer.
+#
+# The built-in locale plugin owns a closed roster: LOCALE_IDS is a frozen
+# ['zh', 'en'], setLocale throws on anything else, and the durable settings
+# schema validates against that same union. None of it is extensible from
+# outside, so this bundle takes the row out and provides the service itself.
+#
+# Ordering matters: this patch must apply after '@deepseek-ai/dsh-web-app',
+# which is where the `locale` row is inserted. `dsh plugin add` appends to
+# dsh.profile.bundles, so a normal install already lands after it.
+
+- id: locale
+  disabled: true
+
+- insert:
+    - id: negen-locale
+      name: "@negen/locale"

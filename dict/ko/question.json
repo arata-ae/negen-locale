@@ -1,0 +1,17 @@
+{
+  "error.incomplete": "이 질문에 먼저 답해 주세요.",
+  "error.unanswered": "선택지를 고르거나 직접 답을 입력해 주세요.",
+  "nav.prev": "이전 질문",
+  "nav.next": "다음 질문",
+  "nav.minimize": "질문 카드 접기",
+  "nav.maximize": "질문 카드 펼치기",
+  "nav.cancel": "모든 질문 닫기",
+  "option.recommended": "추천",
+  "custom.placeholder": "답변 입력",
+  "action.skip": "이 질문 건너뛰기",
+  "action.next": "다음",
+  "plan.header": "플랜 검토",
+  "plan.approve": "승인",
+  "plan.decline": "거절",
+  "plan.discuss": "채팅으로 이야기하기"
+}

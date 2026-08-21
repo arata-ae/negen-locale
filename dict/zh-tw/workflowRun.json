@@ -1,0 +1,5 @@
+{
+  "member.open": "開啟 {name}",
+  "status.running": "執行中",
+  "statusCount.running": "執行中 {count}"
+}
