@@ -1,8 +1,12 @@
 {
+  "candidate.noCwd": "(작업 디렉터리 없음)",
   "section.files": "파일 및 폴더",
-  "section.sessions": "세션 대화",
-  "candidate.file": "파일",
-  "candidate.folder": "폴더",
-  "candidate.session": "세션",
-  "candidate.noCwd": "(작업 디렉터리 없음)"
+  "section.sessions": "세션",
+  "crumb.root": "작업 공간",
+  "time.days": "{n}일",
+  "time.hours": "{n}시간",
+  "time.minutes": "{n}분",
+  "time.months": "{n}개월",
+  "time.now": "방금",
+  "time.years": "{n}년"
 }

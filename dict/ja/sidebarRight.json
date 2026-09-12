@@ -1,0 +1,23 @@
+{
+  "chrome.expand": "サイドバーを開く",
+  "chrome.expandAria": "右サイドバーを開く",
+  "chrome.collapse": "サイドバーを折りたたむ",
+  "chrome.collapseAria": "右サイドバーを折りたたむ",
+  "chrome.toFullscreen": "全画面表示",
+  "chrome.exitFullscreen": "全画面表示を終了",
+  "dock.emptyPane": "空のペイン",
+  "dock.splitPane": "分割",
+  "dock.splitPaneDisabled": "ペインは 2 つまでです",
+  "dock.splitPaneNarrow": "幅が足りず分割できません。サイドバーを広げてください",
+  "dock.closeTab": "閉じる",
+  "dock.addTab": "新しいタブ",
+  "dock.dockFloat": "サイドバーに戻す",
+  "dock.closeFloat": "閉じる",
+  "dock.drop.center": "ここに移動",
+  "dock.drop.left": "左に分割を追加",
+  "dock.drop.right": "右に分割を追加",
+  "dock.drop.top": "上に分割を追加",
+  "dock.drop.bottom": "下に分割を追加",
+  "tab.guide.title": "スタート",
+  "tab.unavailable": "この種類のコンテンツを表示する方法はまだありません。"
+}

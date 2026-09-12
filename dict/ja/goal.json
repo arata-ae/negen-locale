@@ -9,5 +9,6 @@
   "action.pause": "ゴールを一時停止",
   "action.resume": "ゴールを再開",
   "action.edit": "ゴールを編集",
-  "action.clear": "ゴールをクリア"
+  "action.clear": "ゴールをクリア",
+  "phase.active.disarmed": "未実行のゴール"
 }

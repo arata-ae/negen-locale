@@ -4,5 +4,11 @@
   "openDocument": "開啟設定檔",
   "openDocument.error": "無法開啟設定檔",
   "title": "設定",
-  "trigger": "設定"
+  "trigger": "設定",
+  "connection.error": "連接異常",
+  "connection.retry": "立即重連",
+  "connection.connecting": "自動重連中",
+  "connection.connected": "連接成功",
+  "connection.reconnect": "連接異常，點擊立即重連",
+  "connection.restart": "連接中斷，正在自動重試，點擊立即重連"
 }

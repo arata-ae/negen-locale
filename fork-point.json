@@ -1,17 +1,17 @@
 {
   "repository": "deepseek-ai/deepseek-harness",
-  "tag": "dsh-v0.1.1-rc.2",
-  "commit": "b150a551b8d465e31e418e1b2eaf5e79bbb7d28e",
+  "tag": "dsh-v0.1.5-rc.2",
+  "commit": "fb2c4b9e698e30edb738bca4cf0618587db7d203",
   "files": {
-    "packages/client/locale/src/index.ts": "a1aa09da35767a8fd21222bf7090bd52f48a1b7ca81f269f0359dc6dcb1af7b2",
-    "packages/client/locale/src/locale-settings.ts": "fbddb37a0454bc50ea0b10d442afbb5e93e0363ae455d2da1be0853719f23c3d",
-    "packages/client/locale/src/client/index.ts": "c198d7484bbafcdf6be132e2d44ef3a9c20c2d41c89b5d5698efdcbb8f99cbec",
+    "packages/client/locale/src/index.ts": "8ef29b453826229cfabf6d54e9be5c15f7e69854d7ecdbfdc852614377762a61",
+    "packages/client/locale/src/locale-settings.ts": "22dae4592867b6772a2d0edf8b26a267c38f3df2cb3a166ef0b4c069d954bb58",
+    "packages/client/locale/src/client/index.ts": "dc4e41ceb3bbe599d43ef6a3e6be5b7870162f11b3477a224b84fa98fd090102",
     "packages/client/locale/src/client/LanguageRow.tsx": "18424ac6285288cfea26534461aced77068c8cbd00183989a14788724c8446e3",
-    "packages/client/locale/src/client/LanguageRow.module.css": "ed8092da462ef9130cdaa0dffda35449a1c2cf664c8651750b7a1a673d6acbc6",
-    "packages/client/locale/src/client/settings-store.ts": "031fe5734fff51f210d340e43e3e7cc7c9a191692cbfc7fca6a07bc1bc6de3b9",
+    "packages/client/locale/src/client/LanguageRow.module.css": "a581e705ababff2180edda03fb1ae66a065c2349614f72030fc8cf78e1675703",
+    "packages/client/locale/src/client/settings-store.ts": "c6e4cdb85040c7b7783e634ac5d0c429e601784861f349aea640591874a2086e",
     "packages/client/locale/src/locales/index.ts": "f7553ca28e3b151660109383f061fb13cb845baa18a9007bf3ed46fc50b62e1d",
-    "packages/client/locale/src/locales/en.ts": "034d139f9031c3b740e550678145819dc5e5b3a3b5fd4fe11d22d80bca27a66c",
-    "packages/client/locale/src/locales/zh.ts": "3ec52ff64fae264aaf68db4913cea027306137352e75f159ea31ebb7709bd85b",
+    "packages/client/locale/src/locales/en.ts": "34380f1aafbc3e532ac1a7bb58a1803c200a480e99790f8e5d5b4bedac6b080b",
+    "packages/client/locale/src/locales/zh.ts": "c910dd7fbe96b618954a6f5ff34a0dc11eb7280e5ea6322fcc27e2e09026b859",
     "packages/client/locale/src/locales/settings.ts": "9bbea927fb3d46147e262a72335dbcc9cb56d5b4ce0be407a587a8936f9ed393",
     "packages/client/ui-theme/src/styles/base.css": "85f8970d2650108ad47d66da1db3ba00ebbe3f26aaec00551cfa69dd029347a3"
   }

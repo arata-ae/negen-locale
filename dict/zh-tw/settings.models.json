@@ -93,5 +93,10 @@
   "welcomeBody": "DeepSeek Harness 0.1 仍在為 Harness 開發者進行測試。許多地方仍待改進，我們歡迎開發者社群提供回饋。DeepSeek Harness 的核心外掛與基礎 API 在未來數個月內仍會快速演進。\n\n我們期待與世界各地的開發者一同探索智慧的極限，並以開源、開放、可重複使用且可組合的基礎設施為根基。歡迎各地的 Harness 開發者加入 DSH 外掛生態系。",
   "welcomeContinue": "繼續",
   "welcomeError": "無法儲存這項確認，請再試一次。",
-  "welcomeTitle": "內部測試聲明"
+  "welcomeTitle": "內部測試聲明",
+  "fetchSearch": "搜尋模型",
+  "fetchNoMatches": "沒有相符的模型。",
+  "settingsPathUnresolvable": "無法解析設定路徑",
+  "customBaseUrlInvalid": "請輸入有效的 HTTP 或 HTTPS 網址。",
+  "customBaseUrlPlaceholder": "https://gateway.example/v1"
 }

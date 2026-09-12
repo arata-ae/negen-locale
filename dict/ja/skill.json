@@ -3,5 +3,7 @@
   "row.failed": "skill の読み込みに失敗しました",
   "row.stopped": "skill の読み込みを中止しました",
   "row.instructions": "説明",
-  "menu.userOnly": "ユーザーのみ"
+  "menu.userOnly": "ユーザーのみ",
+  "row.title": "スキル",
+  "row.inspect": "詳細を表示"
 }

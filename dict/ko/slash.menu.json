@@ -3,5 +3,9 @@
   "skill": "스킬",
   "subagent": "서브에이전트",
   "loading": "불러오는 중…",
-  "suggestions.aria": "트리거 추천"
+  "suggestions.aria": "트리거 추천",
+  "crumbs.aria": "폴더 탐색 경로",
+  "drill.aria": "폴더 탐색",
+  "drill.hint": "폴더 탐색",
+  "drill.key": "Tab"
 }

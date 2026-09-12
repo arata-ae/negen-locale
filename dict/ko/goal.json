@@ -9,5 +9,6 @@
   "action.pause": "목표 일시 중지",
   "action.resume": "목표 재개",
   "action.edit": "목표 편집",
-  "action.clear": "목표 지우기"
+  "action.clear": "목표 지우기",
+  "phase.active.disarmed": "비활성 목표"
 }

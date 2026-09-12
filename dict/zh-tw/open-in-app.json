@@ -1,0 +1,11 @@
+{
+  "open.title": "在 {app} 中開啟工作目錄",
+  "open.tooltip": "在本機開啟",
+  "open.error": "開啟失敗",
+  "menu.toggle": "選擇開啟方式",
+  "menu.aria": "開啟方式",
+  "app.explorer": "檔案總管",
+  "app.filemanager": "檔案管理員",
+  "app.terminal": "終端機",
+  "app.finder": "Finder"
+}

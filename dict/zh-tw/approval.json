@@ -1,0 +1,7 @@
+{
+  "waiting": "等待核准",
+  "detail.aria": "核准詳細資料",
+  "escalation": "工具 {toolName} 請求越權執行",
+  "reject": "拒絕",
+  "allowOnce": "允許一次"
+}

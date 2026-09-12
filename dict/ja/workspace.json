@@ -60,5 +60,6 @@
   "time.days": "{n}日",
   "time.months": "{n}か月",
   "time.years": "{n}年",
-  "time.ago": "{t}前"
+  "time.ago": "{t}前",
+  "schedule.active": "有効なスケジュールタスクあり"
 }

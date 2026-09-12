@@ -1,0 +1,11 @@
+{
+  "open.title": "{app} でワークスペースを開く",
+  "open.tooltip": "ローカルで開く",
+  "open.error": "開けませんでした",
+  "menu.toggle": "開くアプリを選択",
+  "menu.aria": "アプリで開く",
+  "app.finder": "Finder",
+  "app.explorer": "エクスプローラー",
+  "app.filemanager": "ファイルマネージャー",
+  "app.terminal": "ターミナル"
+}

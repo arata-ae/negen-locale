@@ -3,5 +3,11 @@ src/client/backfill.generated.json
 *.tsbuildinfo
 .DS_Store
 
+# The translation pipeline's scratch space: `pnpm worklist` writes the batches
+# here, `pnpm check` reads them back, `pnpm merge` folds the results in. Never
+# committed — the output that matters is dict/, and a stale batch beside it
+# would look like pending work.
+.work/
+
 # lib/ is deliberately committed: `dsh plugin --profile web add <git-url>`
 # installs this repo straight from git, with no build step on the far side.

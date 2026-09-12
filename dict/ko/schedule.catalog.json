@@ -1,0 +1,20 @@
+{
+  "trigger.one": "알림 {count}개",
+  "trigger.other": "알림 {count}개",
+  "list.aria": "활성 알림",
+  "status.scheduled": "예약됨",
+  "status.overdue": "기한 초과",
+  "frequency.once": "한 번",
+  "frequency.every": "{value}{unit}마다",
+  "unit.day.one": "일",
+  "unit.day.other": "일",
+  "unit.hour.one": "시간",
+  "unit.hour.other": "시간",
+  "unit.minute.one": "분",
+  "unit.minute.other": "분",
+  "unit.second.one": "초",
+  "unit.second.other": "초",
+  "relative.now": "지금 예정",
+  "relative.future": "{value}{unit} 후",
+  "relative.overdue": "{value}{unit} 지남"
+}

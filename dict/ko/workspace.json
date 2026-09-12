@@ -60,5 +60,6 @@
   "time.days": "{n}일",
   "time.months": "{n}개월",
   "time.years": "{n}년",
-  "time.ago": "{t} 전"
+  "time.ago": "{t} 전",
+  "schedule.active": "활성 예약 작업 있음"
 }

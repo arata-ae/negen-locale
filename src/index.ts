@@ -1,7 +1,9 @@
 /** Host registration for the browser locale preference. */
 
 import type { Context } from '@deepseek-ai/cordis'
-import { settingsNamespace } from '@deepseek-ai/dsh-settings'
+// Type-only: pulls the settings Context merge. The namespace itself is a plain
+// string since 0.1.5, where settingsNamespace() was retired.
+import type {} from '@deepseek-ai/dsh-settings'
 import { LOCALE_SETTINGS_NAMESPACE } from './locale-settings.ts'
 import { LocaleSettingsSchema } from './settings-schema.ts'
 
@@ -26,7 +28,7 @@ export const name = 'negen-locale'
 export function apply(ctx: Context): void {
   ctx.inject(['settings'], (settingsCtx) => {
     settingsCtx.settings.register(
-      settingsNamespace(LOCALE_SETTINGS_NAMESPACE),
+      LOCALE_SETTINGS_NAMESPACE,
       LocaleSettingsSchema,
     )
   })

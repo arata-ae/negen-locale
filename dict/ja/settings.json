@@ -4,5 +4,11 @@
   "close": "閉じる",
   "openDocument": "設定ファイルを開く",
   "openDocument.error": "設定ファイルを開けませんでした",
-  "general.nav": "一般"
+  "general.nav": "一般",
+  "connection.error": "未接続",
+  "connection.retry": "今すぐ再接続",
+  "connection.connecting": "再接続中",
+  "connection.connected": "接続しました",
+  "connection.reconnect": "未接続です。今すぐ再接続",
+  "connection.restart": "自動再接続中です。今すぐ再接続"
 }

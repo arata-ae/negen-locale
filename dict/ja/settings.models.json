@@ -93,5 +93,10 @@
   "onboardingLater": "後で設定する",
   "onboardingSave": "保存して続ける",
   "onboardingSaving": "保存中…",
-  "keyRequired": "続けるには API キーを入力してください。"
+  "keyRequired": "続けるには API キーを入力してください。",
+  "fetchSearch": "モデルを検索",
+  "fetchNoMatches": "一致するモデルがありません。",
+  "customBaseUrlInvalid": "有効な HTTP または HTTPS の URL を入力してください。",
+  "customBaseUrlPlaceholder": "https://gateway.example/v1",
+  "settingsPathUnresolvable": "設定パスを解決できません"
 }

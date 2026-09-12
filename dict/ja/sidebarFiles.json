@@ -1,0 +1,15 @@
+{
+  "type.label": "ファイル",
+  "guide.title": "ワークスペースのファイル",
+  "guide.description": "このセッションのワークスペース内のファイルを閲覧します",
+  "loading": "読み込み中…",
+  "empty": "空のディレクトリ",
+  "truncated": "項目が多すぎるため、一部のみ表示しています。",
+  "noWorkspace": "このセッションにはワークスペースのディレクトリがありません。",
+  "reload": "再読み込み",
+  "entry.other": "ファイルでもディレクトリでもないため、開けません。",
+  "error.notFound": "そのディレクトリは存在しません。移動または削除された可能性があります。",
+  "error.outsideWorkspace": "そのディレクトリはワークスペースの外にあるため、サイドバーは読み込みません。",
+  "error.notDirectory": "ディレクトリではありません。",
+  "error.unavailable": "読み込みに失敗しました: {message}"
+}

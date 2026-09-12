@@ -1,0 +1,23 @@
+{
+  "chrome.expand": "사이드바 열기",
+  "chrome.expandAria": "오른쪽 사이드바 열기",
+  "chrome.collapse": "사이드바 접기",
+  "chrome.collapseAria": "오른쪽 사이드바 접기",
+  "chrome.toFullscreen": "전체 화면",
+  "chrome.exitFullscreen": "전체 화면 종료",
+  "dock.emptyPane": "빈 패널",
+  "dock.splitPane": "분할",
+  "dock.splitPaneDisabled": "패널은 최대 두 개입니다",
+  "dock.splitPaneNarrow": "너비가 부족해 분할할 수 없습니다. 사이드바를 넓히세요",
+  "dock.closeTab": "닫기",
+  "dock.addTab": "새 탭",
+  "dock.dockFloat": "사이드바로 되돌리기",
+  "dock.closeFloat": "닫기",
+  "dock.drop.center": "여기로 이동",
+  "dock.drop.left": "왼쪽에 분할 추가",
+  "dock.drop.right": "오른쪽에 분할 추가",
+  "dock.drop.top": "위에 분할 추가",
+  "dock.drop.bottom": "아래에 분할 추가",
+  "tab.guide.title": "시작",
+  "tab.unavailable": "이런 종류의 콘텐츠를 볼 수 있는 방법이 아직 없습니다."
+}

@@ -1,0 +1,11 @@
+{
+  "loading": "正在開啟 PDF…",
+  "password": "此 PDF 需要密碼，暫不支援預覽。",
+  "workerFailed": "PDF 渲染行程無法繼續，請重試。",
+  "unsupported": "PDF 預覽需要完整的檔案內容。",
+  "title": "PDF",
+  "pageImage": "PDF 第 {page} 頁",
+  "rendering": "正在繪製頁面…",
+  "failed": "無法顯示 PDF：{message}",
+  "retry": "重試"
+}

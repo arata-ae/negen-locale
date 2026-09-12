@@ -5,5 +5,13 @@
   "count.live.other": "{count} 個背景任務執行中",
   "duration.title.live": "已執行 {duration}",
   "list.aria": "背景任務",
-  "status.running": "執行中"
+  "status.running": "執行中",
+  "status.stopping": "正在停止",
+  "status.completed": "已完成",
+  "status.killed": "已取消",
+  "status.failed": "已失敗",
+  "duration.seconds": "{seconds}秒",
+  "duration.minutes": "{minutes}分{seconds}秒",
+  "duration.hours": "{hours}小時{minutes}分",
+  "duration.title.done": "耗時 {duration}"
 }

@@ -7,5 +7,8 @@
   "description": "새 세션에 적용할 기본 권한 모드를 선택합니다",
   "loading": "불러오는 중",
   "title": "권한",
-  "unavailable": "사용할 수 없음"
+  "unavailable": "사용할 수 없음",
+  "preset.readOnly": "읽기 전용",
+  "preset.workspaceWrite": "작업 공간 쓰기",
+  "preset.fullAccess": "전체 액세스"
 }

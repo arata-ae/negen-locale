@@ -1,4 +1,10 @@
 {
   "confirm.acknowledge": "我已了解風險，並願意繼續",
-  "confirm.description": "啟用完全權限後，智慧體將減少確認步驟，並且可以直接執行更多操作，包括敏感操作、檔案修改或外部命令。僅建議在你信任目前任務時使用。"
+  "confirm.description": "啟用完全權限後，智慧體將減少確認步驟，並且可以直接執行更多操作，包括敏感操作、檔案修改或外部命令。僅建議在你信任目前任務時使用。",
+  "preset.readOnly": "唯讀",
+  "preset.workspaceWrite": "工作區內修改",
+  "preset.fullAccess": "完全權限",
+  "confirm.title": "確認啟用完全權限？",
+  "confirm.cancel": "取消",
+  "confirm.enable": "啟用完全權限"
 }

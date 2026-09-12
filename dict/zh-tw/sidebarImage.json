@@ -1,0 +1,7 @@
+{
+  "loading": "正在開啟圖片…",
+  "unsupported": "圖片預覽需要完整的檔案內容。",
+  "title": "圖片",
+  "preview": "圖片預覽：{name}",
+  "failed": "無法顯示這張圖片。"
+}

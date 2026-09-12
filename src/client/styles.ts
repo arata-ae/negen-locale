@@ -29,7 +29,7 @@ const CSS = `
   align-items: center;
   gap: 8px;
   padding: 16px 0;
-  border-bottom: 1px solid var(--dsw-alias-border-l2);
+  border-bottom: 0.5px solid var(--dsw-alias-border-l2);
 }
 .${styles.rowText} {
   flex: 1;

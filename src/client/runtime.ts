@@ -10,7 +10,7 @@
 
 import type { Context } from '@deepseek-ai/cordis'
 import type { LocaleDictOf, LocaleNamespaceMap, Translate, TranslateNS } from '@deepseek-ai/dsh-client-ui-slots'
-import type { SettingsScope } from '@deepseek-ai/dsh-client-runtime/client'
+import type { SettingsScope } from '@deepseek-ai/dsh-client-ui-settings/client'
 import {
   CONVERT_FALLBACK, FALLBACK_LOCALE, LOCALES, LOCALE_PREFERENCE_FIELD, isShipped,
   type LocaleDefinition, type LocaleId, type LocaleSettings,

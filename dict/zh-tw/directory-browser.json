@@ -7,5 +7,9 @@
   "browser.open": "開啟",
   "browser.showHidden": "顯示隱藏檔案",
   "browser.truncated": "資料夾過多，僅顯示開頭部分。",
-  "browser.untitledFolder": "未命名資料夾"
+  "browser.untitledFolder": "未命名資料夾",
+  "browser.title": "選擇工作區目錄",
+  "browser.home": "主目錄",
+  "browser.cancel": "取消",
+  "browser.editPath": "編輯路徑"
 }

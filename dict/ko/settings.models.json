@@ -93,5 +93,10 @@
   "onboardingLater": "나중에 설정",
   "onboardingSave": "저장하고 계속",
   "onboardingSaving": "저장 중…",
-  "keyRequired": "계속하려면 API 키를 입력하세요."
+  "keyRequired": "계속하려면 API 키를 입력하세요.",
+  "fetchSearch": "모델 검색",
+  "fetchNoMatches": "일치하는 모델이 없습니다.",
+  "customBaseUrlInvalid": "올바른 HTTP 또는 HTTPS URL을 입력하세요.",
+  "customBaseUrlPlaceholder": "https://gateway.example/v1",
+  "settingsPathUnresolvable": "설정 경로를 확인할 수 없습니다"
 }

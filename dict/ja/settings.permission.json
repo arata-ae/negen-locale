@@ -7,5 +7,8 @@
   "description": "新しいセッションの既定の権限モードを選択します",
   "loading": "読み込み中",
   "title": "権限",
-  "unavailable": "利用できません"
+  "unavailable": "利用できません",
+  "preset.readOnly": "読み取り専用",
+  "preset.workspaceWrite": "ワークスペース書き込み",
+  "preset.fullAccess": "フルアクセス"
 }

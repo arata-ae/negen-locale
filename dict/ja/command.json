@@ -1,10 +1,16 @@
 {
-  "search.placeholder": "検索…",
+  "listbox.aria": "/{command} の一致項目",
+  "overlay.aria": "/{command} の選択肢",
   "search.aria": "選択肢を絞り込む",
-  "status.loading": "選択肢を読み込み中…",
+  "search.placeholder": "検索…",
   "status.applying": "適用中…",
   "status.empty": "選択肢がありません",
-  "overlay.aria": "/{command} の選択肢",
-  "listbox.aria": "/{command} の一致項目",
-  "notice.imagesUnsupported": "/{command} は画像の添付に対応していません。先に画像を削除してください"
+  "status.loading": "選択肢を読み込み中…",
+  "description.compact": "古い会話履歴を圧縮",
+  "description.export": "このセッションのログを ZIP としてダウンロード",
+  "description.feedback": "このセッションのフィードバックを記録",
+  "description.goal": "長時間タスクのゴールを設定・確認",
+  "description.permission": "権限プリセットを切り替え（サンドボックスモードと承認ポリシー）",
+  "description.plan": "プランモードに入る / 退出する",
+  "notice.attachmentsUnsupported": "/{command} は添付ファイルに対応していません。先に添付を削除してください"
 }

@@ -3,5 +3,7 @@
   "row.failed": "skill 載入失敗",
   "row.instructions": "說明",
   "row.running": "正在載入 skill",
-  "row.stopped": "skill 載入已中止"
+  "row.stopped": "skill 載入已中止",
+  "row.inspect": "檢視",
+  "row.title": "技能"
 }

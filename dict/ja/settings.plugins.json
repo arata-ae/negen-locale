@@ -35,5 +35,20 @@
   "webSearchBaseUrl": "エンドポイント",
   "webSearchBaseUrlHint": "空欄にするとプロバイダーの既定値を使用します。",
   "webSearchMaxUses": "リクエストあたりの最大検索回数",
-  "webSearchMaxUsesHint": "1 つのリクエストが回答に至るまでに検索できる回数です。"
+  "webSearchMaxUsesHint": "1 つのリクエストが回答に至るまでに検索できる回数です。",
+  "subagentModelSelectionTitle": "サブエージェント",
+  "subagentModelSelectionDescription": "エージェントがサブエージェントに選べるモデルを制御する設定です。",
+  "subagentModelSelectionToggle": "エージェントにサブエージェントのモデル選択を許可する",
+  "subagentModelSelectionChoose": "有効にすると、エージェントは以下の許可されたモデルから、サブエージェントごとにプロバイダー、モデル、推論の深さを選べます。新しいセッションにのみ適用されます。",
+  "subagentModelSelectionAllowed": "エージェントが選択できるモデル",
+  "subagentModelSelectionLoading": "モデルを読み込み中…",
+  "subagentModelSelectionLoadFailed": "モデルを読み込めませんでした。",
+  "subagentModelSelectionRetry": "再試行",
+  "subagentModelSelectionPartial": "一部のモデルプロバイダーを読み込めませんでした。保存済みの選択は引き続き削除できます。",
+  "subagentModelSelectionUnavailable": "現在利用できません",
+  "subagentModelSelectionUnavailableGroup": "保存済み（現在利用できません）",
+  "subagentModelSelectionEmpty": "現在、モデルを提供しているプロバイダーはありません。",
+  "subagentModelSelectionRequired": "保存する前にモデルを 1 つ以上選択してください。",
+  "subagentModelSelectionConflict": "設定が別の場所で変更されました。下書きを破棄して、もう一度お試しください。",
+  "subagentModelSelectionOff": "サブエージェントは設定済みの既定値を使うか、親エージェントのモデルを継承します。保存済みのモデル選択は保持されます。"
 }

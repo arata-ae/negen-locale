@@ -1,10 +1,16 @@
 {
   "listbox.aria": "/{command} 相符項目",
-  "notice.imagesUnsupported": "/{command} 不接受圖片附件，請先移除圖片",
   "overlay.aria": "/{command} 選項",
   "search.aria": "篩選選項",
   "search.placeholder": "搜尋…",
   "status.applying": "正在套用…",
   "status.empty": "無選項",
-  "status.loading": "正在載入選項…"
+  "status.loading": "正在載入選項…",
+  "description.export": "將目前會話內容匯出為 ZIP",
+  "description.feedback": "傳送關於目前會話的回饋",
+  "description.goal": "設定或檢視長期任務目標",
+  "description.plan": "進入或退出計畫模式",
+  "description.compact": "壓縮先前的對話內容",
+  "description.permission": "切換權限預設集（沙箱模式與核准原則）",
+  "notice.attachmentsUnsupported": "/{command} 不接受附件，請先移除附件"
 }

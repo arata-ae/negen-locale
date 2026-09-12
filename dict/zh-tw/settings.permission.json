@@ -2,5 +2,13 @@
   "confirm.acknowledge": "我已了解風險，並願意繼續",
   "confirm.description": "啟用完全權限後，新會話將減少確認步驟，並且可以直接執行更多操作，包括敏感操作、檔案修改或外部命令。僅建議在你信任後續任務時使用。",
   "description": "選擇新會話的預設權限模式",
-  "loading": "載入中"
+  "loading": "載入中",
+  "preset.readOnly": "唯讀",
+  "title": "權限",
+  "unavailable": "不可用",
+  "preset.workspaceWrite": "工作區內修改",
+  "preset.fullAccess": "完全權限",
+  "confirm.title": "確認啟用完全權限？",
+  "confirm.cancel": "取消",
+  "confirm.enable": "啟用完全權限"
 }

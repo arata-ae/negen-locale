@@ -4,7 +4,7 @@
  * reads via props.useStore. Forked verbatim from
  * `@deepseek-ai/dsh-client-locale`.
  */
-import { defineStore, type EngineStoreHandle } from '@deepseek-ai/dsh-client-runtime/client'
+import { defineStore, type EngineStoreHandle } from '@deepseek-ai/dsh-client-store'
 
 /** One selectable locale row (id + self-described label). */
 export interface LanguageOptionRow {

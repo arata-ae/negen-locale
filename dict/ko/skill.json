@@ -3,5 +3,7 @@
   "row.failed": "skill 불러오기 실패",
   "row.stopped": "skill 불러오기 중단됨",
   "row.instructions": "설명",
-  "menu.userOnly": "사용자 전용"
+  "menu.userOnly": "사용자 전용",
+  "row.title": "스킬",
+  "row.inspect": "자세히 보기"
 }

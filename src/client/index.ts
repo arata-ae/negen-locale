@@ -12,9 +12,11 @@
  * THIS unit the map holds only this package's own merges, but consumers merge
  * more namespaces in and the intersection keeps them string-typed. */
 import type { BoundActions } from '@deepseek-ai/dsh-client-ui-slots'
-import type { ClientContext } from '@deepseek-ai/dsh-client-runtime/client'
-// Type-only: the ctx.settingsScope Context merge and the settings slot types.
+import type { Context as ClientContext } from '@deepseek-ai/cordis'
+// Type-only: the ctx.slots Context merge (the renderer owns the registry since
+// 0.1.5), the ctx.settingsScope merge and the settings slot types.
 // Cross-plugin collaboration goes through the service, never a value import.
+import type {} from '@deepseek-ai/dsh-client-ui-renderer/client'
 import type {} from '@deepseek-ai/dsh-client-ui-settings/client'
 import {
   DOCUMENT_LANGUAGE, LOCALE_SETTINGS_NAMESPACE, type LocaleId, type LocaleSettings,
@@ -24,7 +26,7 @@ import {
   en as settingsEn, ja as settingsJa, ko as settingsKo, zh as settingsZh,
   zhTW as settingsZhTW, type SettingsLocaleKey,
 } from '../locales/settings.ts'
-import { COMMON_NS, LocaleRuntime, type LocaleSnapshot } from './runtime.ts'
+import { COMMON_NS, LocaleRuntime } from './runtime.ts'
 import { BACKFILL } from './dictionaries.ts'
 import { installFontFallback } from './fonts.ts'
 import { installStyles } from './styles.ts'
@@ -73,7 +75,7 @@ function syncDocumentLanguage(active: LocaleId): void {
 }
 
 /** Required services: slot registration plus the settings transport. */
-export const inject = ['slots', 'connection', 'remote', 'settingsScope']
+export const inject = ['slots', 'remote', 'settingsScope']
 
 /** Cordis plugin name. */
 export const name = 'negen-locale'
@@ -120,7 +122,11 @@ export function apply(ctx: ClientContext): void {
 
   const store = createLanguageRowStore()
   let bound: BoundActions<typeof store> | undefined
-  const sync = (snapshot: LocaleSnapshot): void => {
+  // The row and <html lang> ride the LocaleFace subscription, not the
+  // `locale/change` event: the event fires only on an active-locale switch,
+  // while a catalog or registry change moves the revision without emitting it.
+  const sync = (): void => {
+    const snapshot = locale.getSnapshot()
     syncDocumentLanguage(snapshot.active)
     bound?.sync(
       snapshot.active,
@@ -128,7 +134,7 @@ export function apply(ctx: ClientContext): void {
       snapshot.revision,
     )
   }
-  ctx.on('locale/change', sync)
+  ctx.effect(() => locale.subscribe(sync), 'negen-locale: language row and document synchronization')
   // The served markup declares one language; the resolved locale may differ
   // (browser detection, or a stored preference adopted after activation), so
   // state it once at activation rather than waiting for the first change.
@@ -141,7 +147,7 @@ export function apply(ctx: ClientContext): void {
     bound = actions
     // Re-sync from the getter so no event is lost between registration and
     // first render (the store's revision guard drops stale duplicates).
-    sync(locale.getLocale())
+    sync()
     return {
       setLocale: (id) => { locale.setLocale(id) },
     }

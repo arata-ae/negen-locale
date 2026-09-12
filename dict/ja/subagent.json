@@ -32,5 +32,8 @@
   "readonly.oneShot.title": "単発サブエージェントの記録",
   "readonly.title": "このサブエージェントは現在読み取り専用です",
   "readonly.oneShot.body": "単発タスクは追加の指示を受け付けません。ここで実行記録の全体を確認できます。",
-  "readonly.body": "親セッションがオフラインです。メッセージを送信するには親セッションを開き直してください。"
+  "readonly.body": "親セッションがオフラインです。メッセージを送信するには親セッションを開き直してください。",
+  "tokens.thousand": "{value}K",
+  "tokens.million": "{value}M",
+  "tokens.total": "{value}トークン"
 }

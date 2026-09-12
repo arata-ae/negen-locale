@@ -98,20 +98,53 @@ function stripComments(source) {
   return out
 }
 
-/** Namespace declarations: `'ns': KeyType` inside a LocaleNamespaceMap block. */
+/**
+ * Namespace declarations inside a LocaleNamespaceMap block, as the raw type
+ * expression upstream wrote — `CommonKey`, `import('../locale.ts').ChatKey`,
+ * or `keyof typeof zh`. Capturing only the first identifier silently renamed
+ * the last two to `import` and `keyof`, which matched no dictionary and
+ * dropped three whole namespaces out of the gate's view.
+ */
 function namespaceDeclarations(source) {
   const found = new Map()
   const marker = /interface\s+LocaleNamespaceMap\s*\{/g
+  const type = 'import\\s*\\([^()]*\\)\\s*\\.\\s*[A-Za-z_$][\\w$]*'
+    + '|keyof\\s+typeof\\s+[A-Za-z_$][\\w$]*'
+    + '|[A-Za-z_$][\\w$]*'
   let match
   while ((match = marker.exec(source)) !== null) {
     const body = block(source, match.index + match[0].length - 1)
     if (body === null) continue
-    for (const entry of body.matchAll(/(?:^|\n)\s*(?:'([^']+)'|"([^"]+)"|([A-Za-z_$][\w$]*))\s*:\s*([A-Za-z_$][\w$]*)/g)) {
-      const ns = entry[1] ?? entry[2] ?? entry[3]
-      found.set(ns, entry[4])
+    const entry = new RegExp(
+      `(?:^|\\n)\\s*(?:'([^']+)'|"([^"]+)"|([A-Za-z_$][\\w$]*))\\s*:\\s*(${type})`, 'g')
+    for (const declaration of body.matchAll(entry)) {
+      const ns = declaration[1] ?? declaration[2] ?? declaration[3]
+      found.set(ns, declaration[4].replace(/\s+/g, ' '))
     }
   }
   return found
+}
+
+/**
+ * Resolve one raw declared type expression to the name the package's
+ * dictionaries carry.
+ *
+ * Three spellings ship upstream. A bare type name is already that name. An
+ * imported one — `import('./locales.ts').SidebarDocumentPreviewKey` — names the
+ * type in the trailing member, and the dictionaries it covers live in a sibling
+ * file of the same package. `keyof typeof zh` names no type at all: the
+ * dictionary beside it IS the key set, so it resolves through the file's own
+ * `keyof typeof` declarations and, failing those, to the dictionary by name.
+ * @param raw - the declared type expression.
+ * @param owned - this file's `dict const -> declared key type` table.
+ * @returns the key type name, the local dictionary to match, or null.
+ */
+function resolveDeclaration(raw, owned) {
+  const imported = /^import\s*\([^()]*\)\s*\.\s*([A-Za-z_$][\w$]*)$/.exec(raw)
+  if (imported !== null) return { keyType: imported[1], local: null }
+  const local = /^keyof\s+typeof\s+([A-Za-z_$][\w$]*)$/.exec(raw)
+  if (local !== null) return { keyType: owned.get(local[1]) ?? null, local: local[1] }
+  return /^[A-Za-z_$][\w$]*$/.test(raw) ? { keyType: raw, local: null } : null
 }
 
 /** `const NAME = 'text'` string constants, which dictionaries reference by name. */
@@ -163,6 +196,12 @@ function resolvePath(corpus, path) {
 /**
  * Parse a flat `{ 'key': 'value' }` literal. Returns entries plus anything
  * unreadable.
+ *
+ * Scanned character by character rather than with one regular expression: a
+ * value can contain a comma (upstream's zh onboarding copy has a paragraph with
+ * several), and a `,`-delimited pattern reads the tail of that sentence as a key
+ * and then finds nothing else — which is how `settings.models` reported 100
+ * English keys against zero Chinese ones while the Chinese text sat right there.
  * @param body - the literal's body.
  * @param constants - `const NAME = 'text'` values a member may name instead.
  * @param corpus - the package's sources, joined; lets a member spelled as a
@@ -171,31 +210,86 @@ function resolvePath(corpus, path) {
 function flatMap(body, constants = new Map(), corpus = '') {
   const entries = {}
   const unreadable = []
-  const pattern = /(?:^|,)\s*(?:'((?:[^'\\]|\\.)*)'|"((?:[^"\\]|\\.)*)"|([A-Za-z_$][\w$.]*))\s*:\s*(?:'((?:[^'\\]|\\.)*)'|"((?:[^"\\]|\\.)*)"|([^,]+))/g
-  let match
-  while ((match = pattern.exec(body)) !== null) {
-    const key = match[1] ?? match[2] ?? match[3]
-    const value = match[4] ?? match[5]
-    if (value === undefined) {
-      const raw = (match[6] ?? '').trim().replace(/,$/, '')
-      // A value spelled as a shared constant is still a readable entry.
-      const named = constants.get(raw) ?? (corpus === '' ? undefined : resolvePath(corpus, raw))
-      if (named !== undefined) { entries[key] = named; continue }
-      if (raw !== '') unreadable.push(key)
+  let i = 0
+
+  /** Step over a string literal, starting at its quote. */
+  function skipString() {
+    const quote = body[i]
+    i += 1
+    while (i < body.length) {
+      if (body[i] === '\\') { i += 2; continue }
+      if (body[i] === quote) { i += 1; return }
+      i += 1
+    }
+  }
+
+  /**
+   * Step over one value, answering what kind it was.
+   * @returns 'string' when a literal was consumed, 'other' otherwise.
+   */
+  function skipValue() {
+    if (body[i] === "'" || body[i] === '"') { skipString(); return 'string' }
+    if (body[i] === '{' || body[i] === '[') {
+      const open = body[i]
+      const close = open === '{' ? '}' : ']'
+      let depth = 0
+      while (i < body.length) {
+        const ch = body[i]
+        if (ch === "'" || ch === '"' || ch === '`') { skipString(); continue }
+        if (ch === open) depth += 1
+        else if (ch === close) {
+          depth -= 1
+          if (depth === 0) { i += 1; return 'other' }
+        }
+        i += 1
+      }
+      return 'other'
+    }
+    const start = i
+    while (i < body.length && body[i] !== ',') {
+      if (body[i] === '{' || body[i] === '[') { i = start + 1; return skipValue() }
+      i += 1
+    }
+    return 'other'
+  }
+
+  while (i < body.length) {
+    while (i < body.length && /[\s,]/.test(body[i])) i += 1
+    if (i >= body.length) break
+    const keyStart = i
+    if (body[i] === "'" || body[i] === '"') skipString()
+    else while (i < body.length && /[\w$.'"[\]]/.test(body[i])) i += 1
+    const key = body.slice(keyStart, i).replace(/^['"]|['"]$/g, '')
+    while (i < body.length && /\s/.test(body[i])) i += 1
+    if (body[i] !== ':') {
+      // `{ key }` shorthand or a spread: legal, but there is no text to record.
+      unreadable.push(key)
+      while (i < body.length && body[i] !== ',') i += 1
       continue
     }
-    // A long string is spelled as `'first ' + 'second'` across source lines.
-    // Taking only the first operand would record half a sentence as the whole
-    // English text, and a translation of that half would then look correct.
-    let text = decode(value)
-    let cursor = pattern.lastIndex
+    i += 1
+    while (i < body.length && /\s/.test(body[i])) i += 1
+    const valueStart = i
+    if (skipValue() !== 'string') {
+      // A value spelled as a shared constant or a dotted path into one is still
+      // a readable entry; anything else is a shape this gate cannot vouch for.
+      const raw = body.slice(valueStart, i).trim().replace(/,$/, '')
+      const named = constants.get(raw) ?? (corpus === '' ? undefined : resolvePath(corpus, raw))
+      if (named !== undefined) entries[key] = named
+      else if (raw !== '') unreadable.push(key)
+      continue
+    }
+    // The literal just consumed may be one operand of `'first ' + 'second'`.
+    const quoted = body.slice(valueStart, i)
+    let text = decode(quoted.slice(1, -1))
+    let cursor = i
     for (;;) {
       const next = CONTINUATION.exec(body.slice(cursor))
       if (next === null) break
       text += decode(next[1] ?? next[2])
       cursor += next[0].length
     }
-    pattern.lastIndex = cursor
+    i = cursor
     entries[key] = text
   }
   return { entries, unreadable }
@@ -229,13 +323,22 @@ function dictionaries(source, corpus = '') {
     const body = block(source, open)
     if (body === null) continue
     const tail = source.slice(open + body.length + 2, open + body.length + 120)
-    // Two spellings carry the key type: `satisfies Record<K, string>` after
-    // the literal, and `: Record<K, string>` before it. Upstream uses both.
+    // Three spellings carry the key type: `satisfies Record<K, string>` after
+    // the literal, `: Record<K, string>` before it, and the mapped type
+    // `: { [Key in keyof typeof en]: string }` that ui-settings-models uses for
+    // zh. Missing the third left that namespace with 100 English keys and no
+    // Chinese ones at all, which the gate then reported as full coverage.
     const satisfies = /^\s*satisfies\s+Record<\s*([A-Za-z_$][\w$]*)\s*,/.exec(tail)
     const annotated = /Record<\s*([A-Za-z_$][\w$]*)\s*,/.exec(match[2] ?? '')
+    const mapped = /\[\s*[A-Za-z_$][\w$]*\s+in\s+keyof\s+typeof\s+([A-Za-z_$][\w$]*)\s*\]/.exec(match[2] ?? '')
     const { entries, unreadable } = flatMap(body, constants, corpus)
     if (Object.keys(entries).length === 0) continue
-    found.push({ name: match[1], keyType: satisfies?.[1] ?? annotated?.[1] ?? null, entries, unreadable })
+    found.push({
+      name: match[1],
+      keyType: satisfies?.[1] ?? annotated?.[1] ?? mapped?.[1] ?? null,
+      entries,
+      unreadable,
+    })
   }
   return found
 }
@@ -322,12 +425,19 @@ export async function extractDictionaries(harness) {
     for (const file of files) read.set(file, stripComments(await readFile(file, 'utf8')))
     const corpus = [...read.values()].join('\n')
     for (const [file, source] of read) {
-      for (const [ns, keyType] of namespaceDeclarations(source)) declared.set(ns, keyType)
+      const owned = keyTypeSources(source)
+      for (const [ns, raw] of namespaceDeclarations(source)) {
+        const resolved = resolveDeclaration(raw, owned)
+        if (resolved === null) {
+          unreadable.push(`${file.slice(harness.length + 1)}: ${ns} declares "${raw}", which this gate cannot read`)
+          continue
+        }
+        declared.set(ns, { ...resolved, file })
+      }
       const untyped = untypedRegistrations(source, stringConstants(source), corpus)
       if (untyped !== null) {
         namespaces[untyped.ns] = { package: pkg, keyType: null, zh: untyped.zh, en: untyped.en }
       }
-      const owned = keyTypeSources(source)
       for (const dict of dictionaries(source, corpus)) {
         // `zh satisfies Record<string, string>` names no key type; the
         // `export type XxxKey = keyof typeof zh` beside it is the real one.
@@ -339,16 +449,33 @@ export async function extractDictionaries(harness) {
         }
       }
     }
-    for (const [ns, keyType] of declared) {
-      const zh = dicts.find(d => d.name === 'zh' && d.keyType === keyType)
-      const en = dicts.find(d => d.name === 'en' && d.keyType === keyType)
+    for (const [ns, declaration] of declared) {
+      // `keyof typeof zh` points at a dictionary rather than at a type name,
+      // and that dictionary is only the right one in the file that declared
+      // the namespace — every file in a package has its own `zh`.
+      const scoped = declaration.local === null
+        ? dicts
+        : dicts.filter(d => d.file === declaration.file)
+      // A dictionary whose own annotation is unreadable still names itself
+      // `en` or `zh`, and the namespace declaration has already been resolved to
+      // a specific key type — so falling back to the name is what keeps this
+      // from reporting a namespace as fully translated when its whole `zh`
+      // dictionary went unread (settings.models: 100 English keys, zero
+      // Chinese, and nothing said so).
+      const pick = name => scoped.find(d => d.name === name && d.keyType === declaration.keyType)
+        ?? scoped.find(d => d.name === name)
+      const zh = declaration.local === null ? pick('zh') : scoped.find(d => d.name === declaration.local)
+      const en = declaration.local === null ? pick('en') : scoped.find(d => d.name === 'en')
       if (zh === undefined && en === undefined) {
-        orphans.push(`${pkg}: ${ns} declares key type ${keyType} but no dictionary carries it`)
+        orphans.push(
+          `${pkg}: ${ns} declares key type ${declaration.keyType ?? `"keyof typeof ${declaration.local}"`} `
+          + 'but no dictionary carries it',
+        )
         continue
       }
       namespaces[ns] = {
         package: pkg,
-        keyType,
+        keyType: declaration.keyType,
         zh: zh?.entries ?? {},
         en: en?.entries ?? {},
       }

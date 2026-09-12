@@ -1,0 +1,20 @@
+{
+  "loadMore": "載入更多",
+  "changed": "檔案已更新，目前顯示為舊內容。",
+  "reload": "重新讀取檔案",
+  "openWith": "開啟方式",
+  "viewer.text": "純文字",
+  "resourceUnavailable": "檔案資源服務不可用。",
+  "error.notFound": "檔案不存在，可能已被移動或刪除。",
+  "error.notText": "非文字檔案，暫時無法預覽。",
+  "error.notRegularFile": "該路徑不是一般檔案，沒有可顯示的內容。",
+  "loading": "正在讀取…",
+  "reloadNow": "重新載入",
+  "wrap.enable": "自動換行",
+  "wrap.disable": "取消換行",
+  "wrap.aria": "自動換行",
+  "rendererUnavailable": "預覽器 {name} 不可用。",
+  "error.tooLarge": "單頁內容超過 {limit} 上限，無法讀取。",
+  "error.unavailable": "讀取失敗：{message}",
+  "retry": "重試"
+}

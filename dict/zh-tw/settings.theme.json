@@ -1,0 +1,11 @@
+{
+  "appearance.title": "外觀",
+  "appearance.light": "淺色",
+  "appearance.dark": "深色",
+  "appearance.system": "跟隨系統",
+  "fontSize.title": "字型大小",
+  "fontSize.description": "僅影響會話內容的字型大小",
+  "fontSize.unit": "px",
+  "fontSize.increase": "放大字型",
+  "fontSize.decrease": "縮小字型"
+}

@@ -1,5 +1,12 @@
 {
-  "candidate.file": "檔案",
-  "candidate.folder": "資料夾",
-  "section.files": "檔案與資料夾"
+  "section.files": "檔案與資料夾",
+  "section.sessions": "會話",
+  "candidate.noCwd": "（無工作目錄）",
+  "crumb.root": "工作區",
+  "time.now": "剛剛",
+  "time.minutes": "{n}分鐘",
+  "time.hours": "{n}小時",
+  "time.days": "{n}天",
+  "time.months": "{n}個月",
+  "time.years": "{n}年"
 }

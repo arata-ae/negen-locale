@@ -1,0 +1,11 @@
+{
+  "app.explorer": "파일 탐색기",
+  "app.filemanager": "파일",
+  "app.finder": "Finder",
+  "app.terminal": "터미널",
+  "menu.aria": "다음으로 열기",
+  "menu.toggle": "열 앱 선택",
+  "open.error": "열지 못했습니다",
+  "open.title": "작업 공간을 {app}에서 열기",
+  "open.tooltip": "로컬에서 열기"
+}

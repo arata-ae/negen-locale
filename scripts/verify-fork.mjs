@@ -57,13 +57,14 @@ const SEAMS = [
     contains: [
       "'react'", "'react/jsx-runtime'", "'react-dom'", "'react-dom/client'",
       "'@deepseek-ai/cordis'",
+      "'@deepseek-ai/dsh-client-store'",
       "'@deepseek-ai/dsh-client-ui-slots'",
       "'@deepseek-ai/dsh-client-ui-primitives'",
-      "'@deepseek-ai/dsh-client-runtime/client'",
+      "'@deepseek-ai/dsh-client-ui-dockkit'",
     ],
   },
   {
-    file: 'packages/client/runtime/src/client/slots.ts',
+    file: 'packages/client/ui-renderer/src/client/registry.ts',
     why: 'installLocale is how this package becomes the locale face, and it is boot-once',
     contains: ['installLocale(face: LocaleFace)', 'locale face already installed'],
   },
