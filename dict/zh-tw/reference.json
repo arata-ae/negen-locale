@@ -8,5 +8,6 @@
   "time.hours": "{n}小時",
   "time.days": "{n}天",
   "time.months": "{n}個月",
-  "time.years": "{n}年"
+  "time.years": "{n}年",
+  "section.subagents": "子代理"
 }

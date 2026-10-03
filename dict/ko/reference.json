@@ -8,5 +8,6 @@
   "time.minutes": "{n}분",
   "time.months": "{n}개월",
   "time.now": "방금",
-  "time.years": "{n}년"
+  "time.years": "{n}년",
+  "section.subagents": "서브에이전트"
 }

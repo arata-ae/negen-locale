@@ -12,5 +12,19 @@
   "description.plan": "進入或退出計畫模式",
   "description.compact": "壓縮先前的對話內容",
   "description.permission": "切換權限預設集（沙箱模式與核准原則）",
-  "notice.attachmentsUnsupported": "/{command} 不接受附件，請先移除附件"
+  "notice.attachmentsUnsupported": "/{command} 不接受附件，請先移除附件",
+  "section.add": "新增",
+  "section.commands": "指令",
+  "label.goal": "目標",
+  "label.plan": "計畫",
+  "label.feedback": "回饋",
+  "label.compact": "壓縮",
+  "label.permission": "權限",
+  "label.export": "匯出",
+  "token.goal": "目標",
+  "token.plan": "計畫",
+  "token.feedback": "回饋",
+  "token.compact": "壓縮",
+  "token.permission": "權限",
+  "token.export": "匯出"
 }

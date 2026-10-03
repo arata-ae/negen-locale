@@ -5,5 +5,6 @@
   "row.running": "正在載入 skill",
   "row.stopped": "skill 載入已中止",
   "row.inspect": "檢視",
-  "row.title": "技能"
+  "row.title": "技能",
+  "row.preparing": "準備載入技能"
 }

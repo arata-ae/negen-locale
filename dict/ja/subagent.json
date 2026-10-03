@@ -1,7 +1,4 @@
 {
-  "diagnostic.corrupt": "セッション記録が破損しています",
-  "diagnostic.unsupported": "サブエージェント記録のバージョンに対応していません",
-  "diagnostic.unavailable": "セッション記録を一時的に取得できません",
   "duration.seconds": "{seconds}秒",
   "duration.minutes": "{minutes}分{seconds}秒",
   "duration.hours": "{hours}時間{minutes}分{seconds}秒",
@@ -14,7 +11,6 @@
   "duration.exactDays": "{days}日{hours}時間{minutes}分{seconds}秒",
   "duration.exactTitle": "稼働時間の合計: {duration}",
   "loading.label": "サブエージェントを読み込み中…",
-  "loading.aria": "サブエージェントを読み込み中",
   "load.error": "サブエージェントを読み込めません",
   "retry": "再試行",
   "mode.oneShot": "単発",
@@ -35,5 +31,11 @@
   "readonly.body": "親セッションがオフラインです。メッセージを送信するには親セッションを開き直してください。",
   "tokens.thousand": "{value}K",
   "tokens.million": "{value}M",
-  "tokens.total": "{value}トークン"
+  "tokens.total": "{value}トークン",
+  "mode.unknown": "モード不明",
+  "readonly.unknown.body": "子セッションを読み込むと、継続できるかどうかを確認できます。",
+  "activity.completed": "完了",
+  "open.sidebar": "サイドバーで開く",
+  "open.sidebar.aria": "{label} をサイドバーで開く",
+  "sidebar.chat": "チャット"
 }

@@ -6,5 +6,14 @@
   "confirm.title": "フルアクセスを有効にしますか？",
   "preset.readOnly": "読み取り専用",
   "preset.workspaceWrite": "ワークスペース書き込み",
-  "preset.fullAccess": "フルアクセス"
+  "preset.fullAccess": "フルアクセス",
+  "mode": "アクセスモード、現在: {name}",
+  "close": "閉じる",
+  "auto.label": "自動レビュー",
+  "auto.badge": "EXP",
+  "auto.description": "すべてのネイティブツール呼び出しと PTC 内部呼び出しを同じモデルが実験的にレビューしたうえで、サンドボックスなしで実行します。",
+  "auto.confirm.title": "自動レビュー（実験）を有効にしますか？",
+  "auto.confirm.description": "自動レビューはサンドボックスなしで実行されます。すべてのネイティブツール呼び出しと PTC 内部呼び出しの前に、現在のエージェントと同じモデルが許可するかどうかをレビューします。レビューで拒否された呼び出しは、あなたが承認または拒否します。この機能は実験的であり、操作を誤って許可または拒否する可能性があり、追加のトークンを消費します。",
+  "auto.confirm.acknowledge": "これらのリスクを理解した上で続行します",
+  "auto.confirm.enable": "自動レビューを有効にする"
 }

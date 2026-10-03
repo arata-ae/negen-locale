@@ -23,27 +23,19 @@ import { mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { convertZhTw } from '../src/client/convert.ts'
-import { extractDictionaries, readOwnDictionary } from './lib/extract-dicts.mjs'
+import { extractDictionaries } from './lib/extract-dicts.mjs'
 import { harnessRoot } from './lib/harness.mjs'
-import { OWNED_NAMESPACES } from './assemble-dicts.mjs'
+import { foreignSources } from './lib/foreign.mjs'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const workRoot = join(root, '.work')
 const harness = harnessRoot(root)
-const { namespaces } = await extractDictionaries(harness)
-
-/** Namespaces this package registers from TypeScript rather than `dict/`. */
-const OWNED_FILES = {
-  common: join(root, 'src', 'locales'),
-  'settings.locale': join(root, 'src', 'locales', 'settings.ts'),
-}
-const OWNED_EXPORT = { 'zh-TW': 'zhTW' }
-const OWNED_FILE = { 'zh-TW': 'zh-tw' }
+const { namespaces } = await extractDictionaries(harness, foreignSources(root))
 
 /** Locale id -> directory under dict/. */
 const DIRS = { 'zh-TW': 'zh-tw', ja: 'ja', ko: 'ko' }
 
-/** Read this repository's whole corpus for one locale, owned namespaces included. */
+/** Read this repository's whole corpus for one locale. */
 async function readLocale(locale) {
   const corpus = {}
   const dir = join(root, 'dict', DIRS[locale])
@@ -51,13 +43,6 @@ async function readLocale(locale) {
     for (const file of (await readdir(dir)).filter(f => f.endsWith('.json'))) {
       corpus[file.slice(0, -'.json'.length)] = JSON.parse(await readFile(join(dir, file), 'utf8'))
     }
-  }
-  for (const ns of OWNED_NAMESPACES) {
-    const path = OWNED_FILES[ns]
-    const file = path.endsWith('.ts') ? path : join(path, `${OWNED_FILE[locale] ?? locale}.ts`)
-    if (!existsSync(file)) continue
-    const entries = await readOwnDictionary(file, OWNED_EXPORT[locale] ?? locale)
-    if (Object.keys(entries).length > 0) corpus[ns] = entries
   }
   return corpus
 }

@@ -13,7 +13,7 @@
  */
 
 import { readdir, readFile } from 'node:fs/promises'
-import { join } from 'node:path'
+import { dirname, join } from 'node:path'
 
 /** Locate every .ts/.tsx file beneath a directory. */
 async function sources(dir) {
@@ -147,10 +147,16 @@ function resolveDeclaration(raw, owned) {
   return /^[A-Za-z_$][\w$]*$/.test(raw) ? { keyType: raw, local: null } : null
 }
 
-/** `const NAME = 'text'` string constants, which dictionaries reference by name. */
+/**
+ * `const NAME = 'text'` string constants, which dictionaries reference by name.
+ *
+ * The first letter is not constrained: upstream also spells them lowercase —
+ * `const locale = 'settings.sessionLog'` is the namespace a register call
+ * passes — and requiring an uppercase start silently lost those.
+ */
 function stringConstants(source) {
   const found = new Map()
-  for (const m of source.matchAll(/(?:export\s+)?const\s+([A-Z][\w$]*)\s*(?::[^=]+)?=\s*(?:'((?:[^'\\]|\\.)*)'|"((?:[^"\\]|\\.)*)")/g)) {
+  for (const m of source.matchAll(/(?:export\s+)?const\s+([A-Za-z_$][\w$]*)\s*(?::[^=]+)?=\s*(?:'((?:[^'\\]|\\.)*)'|"((?:[^"\\]|\\.)*)")/g)) {
     found.set(m[1], (m[2] ?? m[3]).replace(/\\(['"\\])/g, '$1'))
   }
   return found
@@ -165,6 +171,10 @@ function stringConstants(source) {
  * @returns the string it names, or undefined when any segment is unreadable.
  */
 function resolvePath(corpus, path) {
+  // Anything that is not an identifier path is not a reference to one; the
+  // caller hands over raw source text, and compiling that as a pattern threw
+  // on the first help-copy array the scanner reached.
+  if (!/^[A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*)+$/.test(path)) return undefined
   const [name, ...rest] = path.split('.')
   if (rest.length === 0) return undefined
   const root = new RegExp(`const\\s+${name}\\s*(?::[^=]+?)?\\s*=\\s*\\{`).exec(corpus)
@@ -210,6 +220,8 @@ function resolvePath(corpus, path) {
 function flatMap(body, constants = new Map(), corpus = '') {
   const entries = {}
   const unreadable = []
+  /** `...name` members, for the caller to resolve against the file's imports. */
+  const spreads = []
   let i = 0
 
   /** Step over a string literal, starting at its quote. */
@@ -262,8 +274,12 @@ function flatMap(body, constants = new Map(), corpus = '') {
     const key = body.slice(keyStart, i).replace(/^['"]|['"]$/g, '')
     while (i < body.length && /\s/.test(body[i])) i += 1
     if (body[i] !== ':') {
-      // `{ key }` shorthand or a spread: legal, but there is no text to record.
-      unreadable.push(key)
+      // `...name` pulls a sibling module's literal in, and the text is real —
+      // it just is not in this file. Recorded for the caller to resolve rather
+      // than reported: a spread the caller cannot follow is what it reports.
+      if (body.startsWith('...', keyStart)) spreads.push(key.slice(3))
+      // `{ key }` shorthand is legal and carries no text.
+      else unreadable.push(key)
       while (i < body.length && body[i] !== ',') i += 1
       continue
     }
@@ -274,9 +290,20 @@ function flatMap(body, constants = new Map(), corpus = '') {
       // A value spelled as a shared constant or a dotted path into one is still
       // a readable entry; anything else is a shape this gate cannot vouch for.
       const raw = body.slice(valueStart, i).trim().replace(/,$/, '')
+      if (raw.startsWith('[')) {
+        const joined = arrayJoin(body, valueStart)
+        if (joined !== null) {
+          entries[key] = joined.text
+          i = joined.end
+          continue
+        }
+      }
       const named = constants.get(raw) ?? (corpus === '' ? undefined : resolvePath(corpus, raw))
-      if (named !== undefined) entries[key] = named
-      else if (raw !== '') unreadable.push(key)
+      if (named !== undefined) { entries[key] = named; continue }
+      if (raw !== '') unreadable.push(key)
+      // Step to the next member: an expression the scanner cannot read can be
+      // followed by a call or a property access it would otherwise read as a key.
+      while (i < body.length && body[i] !== ',') i += 1
       continue
     }
     // The literal just consumed may be one operand of `'first ' + 'second'`.
@@ -292,7 +319,217 @@ function flatMap(body, constants = new Map(), corpus = '') {
     i = cursor
     entries[key] = text
   }
+  return { entries, unreadable, spreads }
+}
+
+/**
+ * Local name -> module specifier, for every named import in a file.
+ *
+ * A spread names the LOCAL binding, so an aliased import (`guideEn as guide`)
+ * is followed under the name the literal actually spreads.
+ * @param source - one comment-stripped source file.
+ * @returns the import table.
+ */
+function importsOf(source) {
+  const found = new Map()
+  for (const m of source.matchAll(/import\s*\{([^}]*)\}\s*from\s*['"]([^'"]+)['"]/g)) {
+    for (const piece of m[1].split(',')) {
+      const [original, alias] = piece.split(/\s+as\s+/).map(part => part.trim())
+      if (original !== undefined && original !== '') found.set(alias ?? original, m[2])
+    }
+  }
+  return found
+}
+
+/**
+ * Resolve a relative import specifier beside its importer.
+ * @param file - absolute path of the importing file.
+ * @param specifier - the module specifier as written.
+ * @returns the absolute path to try first, or undefined for a bare specifier.
+ */
+function resolveSibling(file, specifier) {
+  return specifier.startsWith('.') ? join(dirname(file), specifier) : undefined
+}
+
+/**
+ * Read a named `const NAME = { ... }` literal out of a file, spreads and all.
+ * @param source - the file's comment-stripped source.
+ * @param name - the binding to read.
+ * @param corpus - sources of the package, for dotted references into shared objects.
+ * @returns the parsed literal, or null when the file declares no such object.
+ */
+function exportedLiteral(source, name, corpus) {
+  const marker = new RegExp(`(?:export\\s+)?const\\s+${name}\\s*(?::[^=]+?)?\\s*=\\s*\\{`)
+  const match = marker.exec(source)
+  if (match === null) return null
+  const body = block(source, match.index + match[0].length - 1)
+  if (body === null) return null
+  return flatMap(body, stringConstants(source), corpus)
+}
+
+/**
+ * Merge every `...name` a literal spreads into the literal itself.
+ *
+ * Upstream keeps part of a dictionary in a sibling module and folds it in by
+ * spread — `export const en = { ...guideEn, builtInGroup: 'Built-in' }`. The
+ * keys are upstream's and the text is upstream's; only the spelling hides
+ * them. Reading them matters twice over: the gate cannot otherwise see the
+ * keys at all, and a key it cannot see reads as one upstream retired, which is
+ * how a live translation gets deleted by a prune that was only following the
+ * gate.
+ * @param literal - a parsed literal, with its unresolved spreads.
+ * @param file - absolute path of the file the literal came from.
+ * @param read - every source in the package, keyed by absolute path.
+ * @param corpus - sources of the package, joined.
+ * @param seen - file/name pairs already being resolved, to stop a cycle.
+ * @returns the merged entries, and what could not be followed.
+ */
+function foldSpreads(literal, file, read, corpus, seen = new Set()) {
+  const entries = { ...literal.entries }
+  const unreadable = [...literal.unreadable]
+  for (const name of literal.spreads) {
+    if (seen.has(`${file}\u0000${name}`)) {
+      unreadable.push(`...${name} (spread cycle)`)
+      continue
+    }
+    seen.add(`${file}\u0000${name}`)
+    const home = read.get(file) ?? ''
+    const own = exportedLiteral(home, name, corpus)
+    const specifier = importsOf(home).get(name)
+    const base = specifier === undefined ? undefined : resolveSibling(file, specifier)
+    const target = base === undefined
+      ? undefined
+      : [base, `${base}.ts`, `${base}.tsx`].find(candidate => read.has(candidate))
+    const source = target === undefined ? undefined : read.get(target)
+    const imported = source === undefined ? null : exportedLiteral(source, name, corpus)
+    const inner = own ?? imported
+    const from = own === null ? target : file
+    if (inner === null || from === undefined) {
+      unreadable.push(`...${name} (no readable literal behind the spread)`)
+      continue
+    }
+    const folded = foldSpreads(inner, from, read, corpus, seen)
+    Object.assign(entries, folded.entries)
+    unreadable.push(...folded.unreadable)
+  }
   return { entries, unreadable }
+}
+
+/**
+ * Read `[ 'a', 'b' ].join('sep')`.
+ *
+ * Upstream keeps its longest help copy as an array of paragraphs joined at
+ * load time. Every element is a literal and the text is the paragraphs
+ * together, so it is readable — but the scanner has to consume the `.join()`
+ * call too, or it reads the call itself as the next key.
+ * @param body - the literal's body.
+ * @param start - index of the `[`.
+ * @returns the joined text and the index just past the call, or null when the
+ * array holds anything but literals.
+ */
+function arrayJoin(body, start) {
+  const parts = []
+  let i = start
+  let depth = 0
+  while (i < body.length) {
+    const ch = body[i]
+    if (ch === "'" || ch === '"') {
+      let j = i + 1
+      let text = ''
+      while (j < body.length && body[j] !== ch) {
+        if (body[j] === '\\') { text += body[j + 1] ?? ''; j += 2; continue }
+        text += body[j]
+        j += 1
+      }
+      parts.push(decode(text))
+      i = j + 1
+      continue
+    }
+    if (ch === '[') depth += 1
+    else if (ch === ']') {
+      depth -= 1
+      if (depth === 0) { i += 1; break }
+    } else if (depth === 1 && /[A-Za-z_$]/.test(ch)) return null
+    i += 1
+  }
+  const call = /^\s*\.\s*join\(\s*(?:'((?:[^'\\]|\\.)*)'|"((?:[^"\\]|\\.)*)")\s*\)/.exec(body.slice(i))
+  if (call === null) return null
+  return { text: parts.join(decode(call[1] ?? call[2])), end: i + call[0].length }
+}
+
+/**
+ * The file a local binding is imported from, when it is imported at all.
+ * @param name - the local binding.
+ * @param file - the importing file.
+ * @param read - every source in the package, keyed by absolute path.
+ * @returns the absolute path of the sibling, or undefined.
+ */
+function importedFrom(name, file, read) {
+  const specifier = importsOf(read.get(file) ?? '').get(name)
+  const base = specifier === undefined ? undefined : resolveSibling(file, specifier)
+  return base === undefined
+    ? undefined
+    : [base, `${base}.ts`, `${base}.tsx`].find(candidate => read.has(candidate))
+}
+
+/**
+ * Read a `const NAME = 'text'` a file declares or imports.
+ * @param name - the binding.
+ * @param file - the file naming it.
+ * @param read - every source in the package.
+ * @returns the string, or undefined.
+ */
+function constantValue(name, file, read) {
+  const own = stringConstants(read.get(file) ?? '').get(name)
+  if (own !== undefined) return own
+  const target = importedFrom(name, file, read)
+  return target === undefined ? undefined : stringConstants(read.get(target) ?? '').get(name)
+}
+
+/**
+ * Read a `const NAME = { ... }` dictionary a file declares or imports.
+ * @param name - the binding.
+ * @param file - the file naming it.
+ * @param read - every source in the package.
+ * @param corpus - sources of the package, joined.
+ * @returns the parsed literal, or null.
+ */
+function dictionaryBinding(name, file, read, corpus) {
+  const own = exportedLiteral(read.get(file) ?? '', name, corpus)
+  if (own !== null) return own
+  const target = importedFrom(name, file, read)
+  return target === undefined ? null : exportedLiteral(read.get(target) ?? '', name, corpus)
+}
+
+/**
+ * Read every `locale.register(ns, { zh, en })` call in one file.
+ *
+ * The declare-merge names a key type; this names the two dictionaries that
+ * feed the namespace, which is the only place that says so when the pair is
+ * not spelled `en`/`zh` — `permission.access` declares `keyof typeof accessEn`
+ * and registers `{ zh: accessZh, en: accessEn }`. Shorthand (`{ zh, en }`)
+ * and aliased imports both name the local binding, so both are recorded as
+ * written.
+ * @param source - one comment-stripped source file.
+ * @param file - that file's absolute path.
+ * @param read - every source in the package.
+ * @returns namespace -> the two binding names it registers.
+ */
+function registeredDictionaries(source, file, read) {
+  const found = new Map()
+  for (const m of source.matchAll(/\blocale\.register\(\s*(?:'([^']+)'|([A-Za-z_$][\w$]*))\s*,\s*\{([^}]*)\}/g)) {
+    const ns = m[1] ?? constantValue(m[2], file, read)
+    if (ns === undefined) continue
+    const bindings = {}
+    for (const piece of m[3].split(',')) {
+      const colon = piece.indexOf(':')
+      const key = (colon === -1 ? piece : piece.slice(0, colon)).trim()
+      if (key !== 'zh' && key !== 'en') continue
+      bindings[key] = (colon === -1 ? key : piece.slice(colon + 1)).trim()
+    }
+    if (bindings.en !== undefined || bindings.zh !== undefined) found.set(ns, bindings)
+  }
+  return found
 }
 
 /** `+ 'more text'` immediately after a string, the concatenation upstream writes. */
@@ -331,13 +568,14 @@ function dictionaries(source, corpus = '') {
     const satisfies = /^\s*satisfies\s+Record<\s*([A-Za-z_$][\w$]*)\s*,/.exec(tail)
     const annotated = /Record<\s*([A-Za-z_$][\w$]*)\s*,/.exec(match[2] ?? '')
     const mapped = /\[\s*[A-Za-z_$][\w$]*\s+in\s+keyof\s+typeof\s+([A-Za-z_$][\w$]*)\s*\]/.exec(match[2] ?? '')
-    const { entries, unreadable } = flatMap(body, constants, corpus)
+    const { entries, unreadable, spreads } = flatMap(body, constants, corpus)
     if (Object.keys(entries).length === 0) continue
     found.push({
       name: match[1],
       keyType: satisfies?.[1] ?? annotated?.[1] ?? mapped?.[1] ?? null,
       entries,
       unreadable,
+      spreads,
     })
   }
   return found
@@ -405,10 +643,18 @@ function untypedRegistrations(source, constants, corpus) {
 
 /**
  * Extract every namespace's zh and en dictionaries from a checkout.
+ *
+ * The harness supplies the packages that ship inside it. `extraSources` adds
+ * checkouts that own a namespace this corpus back-fills but that live in their
+ * own repository; they are read exactly the same way, so a key their owner
+ * adds is reported as an untranslated key instead of rendering English
+ * forever, and one their owner retires is reported instead of leaving a
+ * translation that answers nothing.
  * @param harness - checkout root.
+ * @param extraSources - `{ package, src, root }` checkouts to read beside it.
  * @returns { namespaces, unreadable, orphans }
  */
-export async function extractDictionaries(harness) {
+export async function extractDictionaries(harness, extraSources = []) {
   const clientRoot = join(harness, 'packages', 'client')
   const packages = (await readdir(clientRoot, { withFileTypes: true }))
     .filter(e => e.isDirectory()).map(e => e.name)
@@ -417,8 +663,17 @@ export async function extractDictionaries(harness) {
   const unreadable = []
   const orphans = []
 
-  for (const pkg of packages) {
-    const files = await sources(join(clientRoot, pkg, 'src'))
+  const targets = [
+    ...packages.map(pkg => ({ pkg, src: join(clientRoot, pkg, 'src'), root: harness })),
+    ...extraSources.map(extra => ({ pkg: extra.package, src: extra.src, root: extra.root })),
+  ]
+
+  for (const target of targets) {
+    const { pkg } = target
+    // Messages are read by a human looking at a checkout, so a path is printed
+    // relative to the root it came from — harness and sibling alike.
+    const relative = file => (file.startsWith(target.root) ? file.slice(target.root.length + 1) : file)
+    const files = await sources(target.src)
     const declared = new Map()
     const dicts = []
     const read = new Map()
@@ -429,7 +684,7 @@ export async function extractDictionaries(harness) {
       for (const [ns, raw] of namespaceDeclarations(source)) {
         const resolved = resolveDeclaration(raw, owned)
         if (resolved === null) {
-          unreadable.push(`${file.slice(harness.length + 1)}: ${ns} declares "${raw}", which this gate cannot read`)
+          unreadable.push(`${relative(file)}: ${ns} declares "${raw}", which this gate cannot read`)
           continue
         }
         declared.set(ns, { ...resolved, file })
@@ -443,12 +698,14 @@ export async function extractDictionaries(harness) {
         // `export type XxxKey = keyof typeof zh` beside it is the real one.
         const declaredType = dict.keyType === 'string' ? null : dict.keyType
         const keyType = declaredType ?? owned.get(dict.name) ?? null
-        dicts.push({ ...dict, keyType, file })
-        for (const key of dict.unreadable) {
-          unreadable.push(`${file.slice(harness.length + 1)}: ${dict.name}.${key}`)
+        const folded = foldSpreads(dict, file, read, corpus)
+        dicts.push({ ...dict, keyType, file, entries: folded.entries })
+        for (const key of folded.unreadable) {
+          unreadable.push(`${relative(file)}: ${dict.name}.${key}`)
         }
       }
     }
+    const sourceOf = file => read.get(file) ?? ''
     for (const [ns, declaration] of declared) {
       // `keyof typeof zh` points at a dictionary rather than at a type name,
       // and that dictionary is only the right one in the file that declared
@@ -467,6 +724,24 @@ export async function extractDictionaries(harness) {
       const zh = declaration.local === null ? pick('zh') : scoped.find(d => d.name === declaration.local)
       const en = declaration.local === null ? pick('en') : scoped.find(d => d.name === 'en')
       if (zh === undefined && en === undefined) {
+        // The declaration names a key type; the register call names the two
+        // dictionaries. When they live in a sibling module — which the
+        // declare-merge cannot see — the call site is the only thing that says
+        // which dictionaries this namespace actually shows.
+        const bindings = registeredDictionaries(sourceOf(declaration.file), declaration.file, read).get(ns)
+        const bound = bindings === undefined ? null : {
+          en: bindings.en === undefined ? null : dictionaryBinding(bindings.en, declaration.file, read, corpus),
+          zh: bindings.zh === undefined ? null : dictionaryBinding(bindings.zh, declaration.file, read, corpus),
+        }
+        if (bound !== null && (bound.en !== null || bound.zh !== null)) {
+          namespaces[ns] = {
+            package: pkg,
+            keyType: declaration.keyType,
+            zh: bound.zh?.entries ?? {},
+            en: bound.en?.entries ?? {},
+          }
+          continue
+        }
         orphans.push(
           `${pkg}: ${ns} declares key type ${declaration.keyType ?? `"keyof typeof ${declaration.local}"`} `
           + 'but no dictionary carries it',

@@ -1,0 +1,20 @@
+{
+  "title": "網頁搜尋",
+  "description": "設定 DeepSeek 搜尋供應商。",
+  "apiKey": "API 金鑰",
+  "apiKeyHint": "不會儲存在設定檔中。留空表示保留目前的 API 金鑰。",
+  "apiKeySet": "已設定 API 金鑰。",
+  "apiKeyUnset": "未設定 API 金鑰；只有使用 DeepSeek 帳號模型的對話能透過預設端點搜尋。",
+  "baseUrl": "端點",
+  "baseUrlHint": "留空則使用供應商預設值。",
+  "maxUses": "每次請求搜尋次數上限",
+  "maxUsesHint": "單次請求在必須回答前最多能搜尋幾次。",
+  "overridden": "已覆寫",
+  "reset": "重設為預設值",
+  "readOnly": "本部署的設定為唯讀。",
+  "unavailable": "此外掛未載入，目前無法設定。",
+  "save": "儲存",
+  "saving": "儲存中…",
+  "saveFailed": "本部署未接受這些值，已保留供你修正。",
+  "invalidNumber": "請輸入數字，留空則使用預設值。"
+}

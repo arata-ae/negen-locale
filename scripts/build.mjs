@@ -138,14 +138,15 @@ for (const label of ['日本語', '한국어', '繁體中文']) {
   }
 }
 
-// Activation wiring: the plugin body is the one module no test can import
-// (Node's type stripper does not load the .tsx the row lives in), so the
-// shipped bundle is where its effects are checked. A dropped install is a
-// blank Language row or a Chinese-glyphed Japanese UI, neither of which fails
-// anything else.
-for (const label of ['negen-locale: font fallback', 'negen-locale: language row styles']) {
-  if (!client.includes(label)) {
-    throw new Error(`client bundle no longer registers the effect ${JSON.stringify(label)}`)
+// Activation wiring: the plugin body cannot be exercised by a unit test — it
+// reads `ctx.locale` and registers effects against it — so the shipped bundle
+// is where its call sites are checked. A dropped `addLanguage` is a language
+// the row never offers, a dropped `register` is a dictionary nobody reads, and
+// a dropped font install is a Japanese UI in Chinese glyphs. None of the three
+// fails anything else.
+for (const marker of ['addLanguage', 'installFontFallback', 'negen-locale: font fallback']) {
+  if (!client.includes(marker)) {
+    throw new Error(`client bundle no longer carries ${JSON.stringify(marker)}`)
   }
 }
 

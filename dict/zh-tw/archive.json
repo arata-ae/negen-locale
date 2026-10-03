@@ -1,0 +1,9 @@
+{
+  "button.archived": "已封存",
+  "panel.title": "已封存",
+  "empty": "沒有已封存的會話。",
+  "action.restore": "還原",
+  "action.delete": "刪除",
+  "menu.confirmDelete": "永久刪除",
+  "close": "關閉"
+}

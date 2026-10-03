@@ -1,6 +1,6 @@
 {
   "title": "HTML",
   "frame": "HTML 檔案預覽",
-  "loading": "正在準備 HTML 預覽…",
+  "loading": "正在渲染檔案…",
   "failed": "無法預覽這個 HTML 檔案。"
 }

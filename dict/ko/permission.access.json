@@ -6,5 +6,14 @@
   "confirm.title": "전체 액세스를 사용하시겠습니까?",
   "preset.readOnly": "읽기 전용",
   "preset.workspaceWrite": "작업 공간 쓰기",
-  "preset.fullAccess": "전체 액세스"
+  "preset.fullAccess": "전체 액세스",
+  "mode": "액세스 모드, 현재: {name}",
+  "close": "닫기",
+  "auto.label": "자동 검토",
+  "auto.badge": "EXP",
+  "auto.description": "샌드박스 없이 실행합니다. 모든 네이티브 도구 호출과 PTC 내부 호출을 같은 모델이 실험적으로 검토합니다.",
+  "auto.confirm.title": "자동 검토(실험)를 사용하시겠습니까?",
+  "auto.confirm.description": "자동 검토는 샌드박스 없이 실행됩니다. 모든 네이티브 도구 호출과 PTC 내부 호출 전에 현재 에이전트와 동일한 모델이 허용 여부를 검토하며, 거부된 호출은 직접 승인하거나 거부합니다. 이 기능은 실험적이므로 동작을 잘못 허용하거나 거부할 수 있고, 추가 토큰을 사용합니다.",
+  "auto.confirm.acknowledge": "이러한 위험을 이해했으며 계속 진행합니다",
+  "auto.confirm.enable": "자동 검토 사용"
 }

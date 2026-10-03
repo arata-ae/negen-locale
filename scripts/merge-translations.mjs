@@ -8,11 +8,6 @@
  * `settings.json` opens with `trigger`, `title`, `close` — so appending keeps
  * the diff to the text that changed plus one reviewable block of additions.
  *
- * Refuses to write a namespace this package registers from `src/locales/`: a
- * `dict/` file for one of those would have the back-fill loop register the same
- * (namespace, locale) twice and take the plugin down at boot. The build refuses
- * it too, and that is the wrong place to find out.
- *
  * Run `check-translations.mjs` first; it catches placeholders and untranslated
  * values that this script would happily write.
  *
@@ -23,7 +18,6 @@ import { existsSync } from 'node:fs'
 import { readdir, readFile, writeFile } from 'node:fs/promises'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { OWNED_NAMESPACES } from './assemble-dicts.mjs'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const DIRS = { 'zh-TW': 'zh-tw', ja: 'ja', ko: 'ko' }
@@ -51,13 +45,6 @@ for (const [locale, dir] of Object.entries(DIRS)) {
     const ns = file.slice(0, -'.json'.length).replace(/\.[ab]$/, '')
     const entries = JSON.parse(await readFile(join(outDir, file), 'utf8'))
     byNamespace[ns] = { ...(byNamespace[ns] ?? {}), ...entries }
-  }
-
-  const owned = Object.keys(byNamespace).filter(ns => OWNED_NAMESPACES.includes(ns))
-  if (owned.length > 0) {
-    console.error(`${locale}: ${owned.join(', ')} belong in src/locales/, not dict/ — merge them by hand.`)
-    process.exitCode = 1
-    continue
   }
 
   let added = 0

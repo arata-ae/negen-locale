@@ -1,16 +1,21 @@
 # @negen/locale composes over the dsh-web-app bundle layer.
 #
-# The built-in locale plugin owns a closed roster: LOCALE_IDS is a frozen
-# ['zh', 'en'], setLocale throws on anything else, and the durable settings
-# schema validates against that same union. None of it is extensible from
-# outside, so this bundle takes the row out and provides the service itself.
+# One inserted row, and deliberately nothing else. This package is a language
+# pack: it widens the roster the built-in locale plugin publishes and fills in
+# the Traditional Chinese, Japanese and Korean text for namespaces other
+# packages own. It does not disable the built-in row, replace its service, or
+# take over its settings namespace.
 #
-# Ordering matters: this patch must apply after '@deepseek-ai/dsh-web-app',
-# which is where the `locale` row is inserted. `dsh plugin add` appends to
-# dsh.profile.bundles, so a normal install already lands after it.
-
-- id: locale
-  disabled: true
+# That last part is not a preference. The desktop app resolves the copy it
+# opens with by looking for a settings namespace named `locale` and throws when
+# there is none, so a composition that disables or re-owns that row is an app
+# that never boots. Since 0.2.0 the namespace is the profile row id and a patch
+# cannot rename a row, so owning `locale` is not something a replacement plugin
+# can do at all — see UPSTREAM.md.
+#
+# Ordering is not load-bearing here: this row injects the `locale` service, so
+# Cordis applies it only once the built-in plugin has provided it.
+# `dsh plugin add` appends this bundle after dsh-web-app in any case.
 
 - insert:
     - id: negen-locale

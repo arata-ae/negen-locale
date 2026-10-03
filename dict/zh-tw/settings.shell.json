@@ -1,0 +1,16 @@
+{
+  "title": "Shell",
+  "description": "限制每條命令可執行的時間長度與輸出量。",
+  "timeoutMs": "命令逾時（毫秒）",
+  "timeoutMsHint": "單一命令允許執行的最長時間，逾時即終止。",
+  "maxOutputBytes": "單一串流輸出上限（位元組）",
+  "maxOutputBytesHint": "超出上限的輸出會轉存到暫存檔，不會遺失。",
+  "overridden": "已覆寫",
+  "reset": "重設為預設值",
+  "readOnly": "本部署的設定為唯讀。",
+  "unavailable": "此外掛未載入，目前無法設定。",
+  "save": "儲存",
+  "saving": "儲存中…",
+  "saveFailed": "本部署未接受這些值，已保留供你修正。",
+  "invalidNumber": "請輸入數字，留空則使用預設值。"
+}

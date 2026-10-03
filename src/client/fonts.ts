@@ -16,8 +16,9 @@
  * actually is, while fallback also gets embedded foreign text right. Measured
  * in Electron 43 on macOS 27 over 直骨海者: upstream renders one raster for
  * `ja`, `ko`, `zh-CN` and `en`; without the Chinese families the four
- * languages render four distinct, correct rasters. This is why
- * {@link syncDocumentLanguage} is load-bearing rather than cosmetic.
+ * languages render four distinct, correct rasters. This is why the active
+ * locale's `<html lang>`, which the built-in plugin keeps in step, is
+ * load-bearing rather than cosmetic.
  *
  * The Latin head stays exactly as upstream wrote it, so Latin text is
  * untouched on every platform.

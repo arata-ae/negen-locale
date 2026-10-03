@@ -1,7 +1,13 @@
 {
   "title": "画像",
   "preview": "画像プレビュー: {name}",
-  "loading": "画像を開いています…",
+  "loading": "ドキュメントをレンダリング中...",
   "failed": "この画像を表示できませんでした。",
-  "unsupported": "画像プレビューにはファイル全体の内容が必要です。"
+  "unsupported": "画像プレビューにはファイル全体の内容が必要です。",
+  "zoomControls": "ズームコントロール",
+  "zoomMenu": "ズームを選択",
+  "zoomOut": "縮小",
+  "zoomIn": "拡大",
+  "zoomFitWidth": "幅に合わせる",
+  "zoomValue": "{percent}%"
 }

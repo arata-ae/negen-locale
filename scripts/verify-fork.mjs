@@ -30,18 +30,13 @@ const recordPath = join(root, 'fork-point.json')
  * stylesheet is the one it does not fork: `src/client/fonts.ts` redefines its
  * font variables from the cascade, so an upstream edit to them lands here
  * rather than in a merge.
+ *
+ * This list held eleven files while this package replaced the locale plugin.
+ * At 0.2.0 the nine locale-package entries came off it: the package extends
+ * that plugin now instead of forking it, so the stylesheet is all that is left
+ * to diff. The seams below are what carries the rest.
  */
 const FORKED = [
-  'packages/client/locale/src/index.ts',
-  'packages/client/locale/src/locale-settings.ts',
-  'packages/client/locale/src/client/index.ts',
-  'packages/client/locale/src/client/LanguageRow.tsx',
-  'packages/client/locale/src/client/LanguageRow.module.css',
-  'packages/client/locale/src/client/settings-store.ts',
-  'packages/client/locale/src/locales/index.ts',
-  'packages/client/locale/src/locales/en.ts',
-  'packages/client/locale/src/locales/zh.ts',
-  'packages/client/locale/src/locales/settings.ts',
   'packages/client/ui-theme/src/styles/base.css',
 ]
 
@@ -64,24 +59,28 @@ const SEAMS = [
     ],
   },
   {
-    file: 'packages/client/ui-renderer/src/client/registry.ts',
-    why: 'installLocale is how this package becomes the locale face, and it is boot-once',
-    contains: ['installLocale(face: LocaleFace)', 'locale face already installed'],
-  },
-  {
-    file: 'packages/client/ui-slots/src/renderer.ts',
-    why: 'LocaleFace is the contract LocaleRuntime satisfies',
-    contains: ['interface LocaleFace', 'bind(ns: string): Translate'],
-  },
-  {
-    file: 'packages/client/ui-theme/src/styles/base.css',
-    why: 'src/client/fonts.ts redefines these two by name; a renamed or added font variable keeps upstream\'s Simplified Chinese stack in force',
-    contains: ['--dsw-font-family:', '--ds-font-family-code:'],
+    file: 'packages/client/locale/src/client/index.ts',
+    why: 'the extension points this pack registers through: the catalog it widens, the per-locale dictionary it back-fills, and the snapshot it reads to skip a language the composition already carries',
+    contains: [
+      'addLanguage(input: LanguageRegistration): () => void',
+      'register(ns: string, locale: string, dict: LocaleDict): () => void',
+      'getSnapshot(): LocaleSnapshot',
+    ],
   },
   {
     file: 'packages/bundle/web-app/cordis.patch.yml',
-    why: 'cordis.patch.yml disables this row by id; a renamed row would silently leave two locale plugins mounted',
+    why: 'the row this pack extends: the built-in plugin provides the locale service and owns the settings namespace, so a composition that drops or renames this row leaves nothing to extend — this patch deliberately inserts no replacement',
     contains: ['id: locale', "name: '@deepseek-ai/dsh-client-locale'"],
+  },
+  {
+    file: 'apps/desktop/src/welcome-backend.ts',
+    why: 'the desktop app resolves its welcome copy by finding the settings namespace named "locale" and throws when it is absent — the reason a bundle that disables, renames or re-owns that row makes the app unbootable, and the reason this package stopped replacing the built-in plugin',
+    contains: ["item.ns === 'locale'", 'desktop welcome: invalid locale preference'],
+  },
+  {
+    file: 'packages/client/ui-theme/src/styles/base.css',
+    why: "src/client/fonts.ts redefines these two by name; a renamed or added font variable keeps upstream's Simplified Chinese stack in force",
+    contains: ['--dsw-font-family:', '--ds-font-family-code:'],
   },
 ]
 

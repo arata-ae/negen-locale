@@ -12,5 +12,19 @@
   "description.goal": "장기 작업의 목표 설정 또는 확인",
   "description.permission": "권한 프리셋 전환(샌드박스 모드 + 승인 정책)",
   "description.plan": "plan mode 켜기 또는 끄기",
-  "notice.attachmentsUnsupported": "/{command} 명령은 첨부 파일을 지원하지 않습니다. 먼저 첨부 파일을 제거하세요"
+  "notice.attachmentsUnsupported": "/{command} 명령은 첨부 파일을 지원하지 않습니다. 먼저 첨부 파일을 제거하세요",
+  "section.add": "추가",
+  "section.commands": "명령",
+  "label.goal": "목표",
+  "label.plan": "계획",
+  "label.feedback": "피드백",
+  "label.compact": "압축",
+  "label.permission": "권한",
+  "label.export": "내보내기",
+  "token.goal": "목표",
+  "token.plan": "계획",
+  "token.feedback": "피드백",
+  "token.compact": "압축",
+  "token.permission": "권한",
+  "token.export": "내보내기"
 }

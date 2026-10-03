@@ -1,7 +1,13 @@
 {
-  "loading": "正在開啟圖片…",
+  "loading": "正在渲染檔案…",
   "unsupported": "圖片預覽需要完整的檔案內容。",
   "title": "圖片",
   "preview": "圖片預覽：{name}",
-  "failed": "無法顯示這張圖片。"
+  "failed": "無法顯示這張圖片。",
+  "zoomControls": "縮放控制項",
+  "zoomMenu": "選擇縮放比例",
+  "zoomOut": "縮小",
+  "zoomIn": "放大",
+  "zoomFitWidth": "符合寬度",
+  "zoomValue": "{percent}%"
 }

@@ -19,5 +19,18 @@
   "dock.drop.top": "上に分割を追加",
   "dock.drop.bottom": "下に分割を追加",
   "tab.guide.title": "スタート",
-  "tab.unavailable": "この種類のコンテンツを表示する方法はまだありません。"
+  "tab.unavailable": "この種類のコンテンツを表示する方法はまだありません。",
+  "command.close": "現在のページまたはウィンドウを閉じる",
+  "command.refresh": "現在のページを更新",
+  "command.noRefresh": "このページは更新できません",
+  "command.toggle": "右サイドバーの表示を切り替え",
+  "command.fullscreen": "パネルの全画面表示を切り替え",
+  "command.noSession": "先にセッションを選択してください",
+  "command.noFocus": "先に右サイドバーのペインにフォーカスしてください",
+  "command.stale": "ページが切り替わりました。もう一度フォーカスしてください",
+  "command.collapsed": "先に右サイドバーを開いてください",
+  "command.float": "フローティングパネルではこの操作は利用できません",
+  "command.empty": "先にページを開いてください",
+  "command.budget": "ペインは 2 つまでです",
+  "command.width": "幅が足りず分割できません。サイドバーを広げてください"
 }

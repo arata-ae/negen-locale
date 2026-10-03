@@ -19,5 +19,18 @@
   "dock.drop.right": "右分欄",
   "dock.drop.top": "上分欄",
   "dock.drop.bottom": "下分欄",
-  "tab.guide.title": "開始"
+  "tab.guide.title": "開始",
+  "command.close": "關閉目前頁面或視窗",
+  "command.refresh": "重新整理目前頁面",
+  "command.noRefresh": "目前頁面不支援重新整理",
+  "command.toggle": "展開／收起右側邊欄",
+  "command.fullscreen": "面板全螢幕／結束全螢幕",
+  "command.noSession": "請先選擇工作階段",
+  "command.noFocus": "請先聚焦右側面板",
+  "command.stale": "頁面已切換，請重新聚焦",
+  "command.collapsed": "請先展開右側邊欄",
+  "command.float": "浮動面板不支援此操作",
+  "command.empty": "請先開啟頁面",
+  "command.budget": "已達兩格上限",
+  "command.width": "寬度不足，請先加寬側邊欄再分欄"
 }

@@ -1,0 +1,17 @@
+{
+  "title": "試算表",
+  "language": "zh-TW",
+  "loading": "正在轉譯檔案...",
+  "invalid": "無法開啟此試算表。請檢查檔案格式、內容或密碼保護。",
+  "tooLarge": "此活頁簿超過預覽大小上限。",
+  "timeout": "開啟此活頁簿逾時。請改用較小的檔案。",
+  "encoding": "無法辨識此文字檔案的編碼。請以 UTF-8 或含 BOM 的 UTF-16 重新儲存後重試。",
+  "formulaWarning": "此活頁簿包含公式，顯示的結果可能缺漏或不準確。",
+  "unsupportedNotice": "目前預覽不支援此活頁簿中的{features}。請以系統應用程式開啟，以獲得完整體驗。",
+  "charts": "圖表",
+  "images": "圖片",
+  "shapes": "形狀",
+  "conditionalFormatting": "條件式格式",
+  "featureSeparator": "、",
+  "retry": "重試"
+}

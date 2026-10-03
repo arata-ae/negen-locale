@@ -1,0 +1,9 @@
+{
+  "button.archived": "アーカイブ済み",
+  "panel.title": "アーカイブ済み",
+  "empty": "アーカイブされたセッションはありません。",
+  "action.restore": "復元",
+  "action.delete": "削除",
+  "menu.confirmDelete": "完全に削除",
+  "close": "閉じる"
+}

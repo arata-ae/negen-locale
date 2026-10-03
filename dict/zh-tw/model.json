@@ -1,14 +1,11 @@
 {
   "action.reload": "重新載入",
-  "blocked.composer": "目前模型不可用，請先選擇模型",
   "empty.efforts": "目前模型未提供推理等級。",
   "option.loadError": "目錄載入失敗：{message}",
   "status.loading": "正在重新整理模型列表…",
   "trigger.aria": "選擇模型，目前 {model}",
   "trigger.ariaEffort": "選擇模型，目前 {model}，推理等級 {effort}",
   "warning.groupLoad": "{name} 載入失敗：{message}",
-  "option.deepseekV4Flash.description": "快速、高效且經濟；適合目標明確、常規或並行任務。",
-  "option.deepseekV4Pro.description": "更強的自主編碼、知識與複雜推理能力；適合複雜或品質優先的任務，但成本更高。",
   "trigger.loading": "正在載入模型…",
   "command.description": "選擇本會話使用的模型",
   "trigger.fallback": "選擇模型",
@@ -18,5 +15,11 @@
   "menu.effort": "推理等級",
   "effort.providerDefault": "預設",
   "error.action": "模型操作失敗：{message}",
-  "empty.models": "沒有可用的模型。"
+  "empty.models": "沒有可用的模型。",
+  "provider.account": "DeepSeek 帳號",
+  "command.label": "模型",
+  "error.sessionInUse": "此會話已在使用中，可能是被另一個執行中的 DSH 執行個體佔用（例如 dsh web 或桌面應用程式）。請結束其他執行中的 DSH 後重試。",
+  "search.placeholder": "搜尋模型…",
+  "search.clear": "清除搜尋",
+  "search.empty": "沒有符合的模型。"
 }

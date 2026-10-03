@@ -1,0 +1,14 @@
+{
+  "title": "Agent 迴圈",
+  "description": "控制 Agent 分派工具呼叫的方式。",
+  "maxParallel": "平行工具呼叫數",
+  "maxParallelHint": "同一步驟內同時執行平行安全呼叫的上限。",
+  "overridden": "已覆寫",
+  "reset": "重設為預設值",
+  "readOnly": "本部署的設定為唯讀。",
+  "unavailable": "此外掛未載入，目前無法設定。",
+  "save": "儲存",
+  "saving": "儲存中…",
+  "saveFailed": "本部署未接受這些值，已保留供你修正。",
+  "invalidNumber": "請輸入數字，留空則使用預設值。"
+}

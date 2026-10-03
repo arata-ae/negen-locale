@@ -1,0 +1,17 @@
+{
+  "title": "스프레드시트",
+  "language": "ko",
+  "loading": "문서 렌더링 중...",
+  "invalid": "이 스프레드시트를 열 수 없습니다. 형식, 내용 또는 암호 보호를 확인하세요.",
+  "tooLarge": "이 통합 문서는 미리보기 크기 제한을 초과했습니다.",
+  "timeout": "통합 문서 열기 시간이 초과되었습니다. 더 작은 파일로 다시 시도하세요.",
+  "encoding": "이 텍스트 인코딩을 읽을 수 없습니다. 파일을 BOM이 있는 UTF-8 또는 UTF-16으로 저장한 후 다시 시도하세요.",
+  "formulaWarning": "이 통합 문서에는 수식이 있습니다. 표시된 결과가 없거나 부정확할 수 있습니다.",
+  "unsupportedNotice": "이 미리보기는 이 통합 문서의 {features}을(를) 지원하지 않습니다. 모든 기능을 사용하려면 시스템 앱에서 여세요.",
+  "charts": "차트",
+  "images": "이미지",
+  "shapes": "도형",
+  "conditionalFormatting": "조건부 서식",
+  "featureSeparator": ", ",
+  "retry": "다시 시도"
+}

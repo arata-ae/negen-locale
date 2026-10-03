@@ -1,8 +1,19 @@
 {
-  "chip.off.aria": "plan mode 已關閉，按下開啟",
-  "chip.off.title": "plan mode 已關閉 — 點擊開啟（/plan）",
   "chip.on.aria": "plan mode 已開啟，按下關閉",
   "chip.on.title": "plan mode 已開啟 — 點擊關閉（/plan off）",
   "chip.label": "Plan",
-  "chip.exitFailed": "退出 plan mode 失敗"
+  "chip.exitFailed": "退出 plan mode 失敗",
+  "preview.title": "計畫",
+  "preview.document": "計畫 · Markdown",
+  "preview.action": "開啟",
+  "preview.open": "在側邊欄開啟計畫",
+  "preview.full": "檢視完整計畫",
+  "preview.openNamed": "開啟計畫：{title}",
+  "preview.loading": "正在載入計畫…",
+  "preview.failed": "無法載入計畫",
+  "preview.invalidAddress": "計畫位址無效",
+  "preview.historyUnavailable": "會話歷史暫不可用",
+  "preview.notFound": "找不到這份計畫",
+  "preview.unavailable": "計畫預覽不可用",
+  "preview.expired": "此暫時性計畫預覽已失效。請從仍在等待審核的卡片重新開啟。"
 }

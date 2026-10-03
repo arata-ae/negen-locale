@@ -29,10 +29,14 @@
   "enabledTag": "已啟用",
   "disabledTag": "已停用",
   "conditionalTag": "條件式啟用",
-  "presetEnabledTag": "透過預設啟用",
+  "presetEnabledTag": "透過預設",
   "failedTag": "啟動失敗",
   "moduleLabel": "模組",
   "fromPreset": "來自",
   "condition": "停用條件",
-  "pending": "等待相依項目"
+  "pending": "等待相依項目",
+  "clientSyncing": "正在同步本頁面的外掛…",
+  "clientSyncFailed": "本頁面部分外掛無法同步；主機端的啟用狀態維持不變。",
+  "clientSyncRetry": "重試本頁面",
+  "metadataError": "套件中繼資料錯誤：{error}"
 }

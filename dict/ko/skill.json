@@ -5,5 +5,6 @@
   "row.instructions": "설명",
   "menu.userOnly": "사용자 전용",
   "row.title": "스킬",
-  "row.inspect": "자세히 보기"
+  "row.inspect": "자세히 보기",
+  "row.preparing": "스킬 불러오기 준비 중"
 }

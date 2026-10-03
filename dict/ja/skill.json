@@ -5,5 +5,6 @@
   "row.instructions": "説明",
   "menu.userOnly": "ユーザーのみ",
   "row.title": "スキル",
-  "row.inspect": "詳細を表示"
+  "row.inspect": "詳細を表示",
+  "row.preparing": "skill の読み込みを準備中"
 }

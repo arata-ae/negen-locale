@@ -12,5 +12,19 @@
   "description.goal": "長時間タスクのゴールを設定・確認",
   "description.permission": "権限プリセットを切り替え（サンドボックスモードと承認ポリシー）",
   "description.plan": "プランモードに入る / 退出する",
-  "notice.attachmentsUnsupported": "/{command} は添付ファイルに対応していません。先に添付を削除してください"
+  "notice.attachmentsUnsupported": "/{command} は添付ファイルに対応していません。先に添付を削除してください",
+  "section.add": "追加",
+  "section.commands": "コマンド",
+  "label.goal": "ゴール",
+  "label.plan": "プラン",
+  "label.feedback": "フィードバック",
+  "label.compact": "圧縮",
+  "label.permission": "権限",
+  "label.export": "エクスポート",
+  "token.goal": "ゴール",
+  "token.plan": "プラン",
+  "token.feedback": "フィードバック",
+  "token.compact": "圧縮",
+  "token.permission": "権限",
+  "token.export": "エクスポート"
 }

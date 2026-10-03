@@ -11,5 +11,9 @@
   "error.notFound": "해당 디렉터리가 없습니다. 이동되었거나 삭제되었을 수 있습니다.",
   "error.outsideWorkspace": "해당 디렉터리가 작업 공간 밖에 있어 사이드바에서 읽지 않습니다.",
   "error.notDirectory": "디렉터리가 아닙니다.",
-  "error.unavailable": "읽기 실패: {message}"
+  "error.unavailable": "읽기 실패: {message}",
+  "shortcut.noSession": "세션을 먼저 선택하세요",
+  "autoRefresh": "자동 새로 고침",
+  "autoRefresh.enable": "자동 새로 고침 켜기",
+  "autoRefresh.disable": "자동 새로 고침 끄기"
 }

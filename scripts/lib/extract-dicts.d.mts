@@ -15,14 +15,26 @@ export interface ExtractedNamespace {
   en: Record<string, string>
 }
 
+/** One checkout read beside the harness: a package that owns a namespace. */
+export interface ExtraSource {
+  /** Package name, recorded as the namespace's owner. */
+  package: string
+  /** Directory holding the package's `src/`. */
+  src: string
+  /** Root that paths in messages are printed relative to. */
+  root: string
+}
+
 /**
- * Extract every namespace's zh and en dictionaries from a harness checkout.
+ * Extract every namespace's zh and en dictionaries from a harness checkout,
+ * plus any sibling checkouts named in `extraSources`.
  * @param harness - checkout root.
+ * @param extraSources - checkouts that own a namespace outside the harness.
  * @returns namespaces by name, plus what the scanner could not read
  * (`unreadable`) and namespaces that declared a key type no dictionary
  * carries (`orphans`). Both lists empty is the healthy state.
  */
-export function extractDictionaries(harness: string): Promise<{
+export function extractDictionaries(harness: string, extraSources?: readonly ExtraSource[]): Promise<{
   namespaces: Record<string, ExtractedNamespace>
   unreadable: string[]
   orphans: string[]

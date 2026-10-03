@@ -7,6 +7,11 @@
  * Locale directories are lowercase on disk (`zh-tw`) and carry their real
  * locale id (`zh-TW`) in LOCALE_DIRS below — case-insensitive filesystems
  * make a lowercase directory the only spelling that round-trips.
+ *
+ * Only the three locales this pack adds are here. `zh` and `en` belong to the
+ * built-in plugin, which registers them for every namespace itself; a corpus
+ * file for either would register a second occupant of a pair that already has
+ * one, and the runtime throws on that — taking this plugin down at boot.
  */
 
 import { readdir, readFile, writeFile } from 'node:fs/promises'
@@ -16,15 +21,6 @@ import { fileURLToPath } from 'node:url'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const out = join(root, 'src', 'client', 'backfill.generated.json')
-
-/**
- * Namespaces this package registers from `src/locales/`, listing every locale
- * in one typed call. A `dict/` file for one of them would have the back-fill
- * loop register the same (namespace, locale) a second time, and the runtime
- * refuses a duplicate occupant — the whole plugin then fails to apply, at boot,
- * with nothing pointing back here. So it is a build error instead.
- */
-export const OWNED_NAMESPACES = ['common', 'settings.locale']
 
 /** Locale directory on disk -> the locale id it registers under. */
 export const LOCALE_DIRS = { 'zh-tw': 'zh-TW', 'ja': 'ja', 'ko': 'ko' }
@@ -41,12 +37,6 @@ async function readLocale(dir) {
   const namespaces = {}
   for (const file of files) {
     const namespace = file.slice(0, -'.json'.length)
-    if (OWNED_NAMESPACES.includes(namespace)) {
-      throw new Error(
-        `dict/${dir}/${file}: "${namespace}" is registered from src/locales/, so a dict/ file for it`
-        + ' would collide at boot. Put the text in src/locales/ instead.',
-      )
-    }
     const parsed = JSON.parse(await readFile(join(localeRoot, file), 'utf8'))
     for (const [key, value] of Object.entries(parsed)) {
       if (typeof value !== 'string') {

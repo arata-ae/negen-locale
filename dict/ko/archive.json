@@ -1,0 +1,9 @@
+{
+  "button.archived": "보관됨",
+  "panel.title": "보관됨",
+  "empty": "보관된 세션이 없습니다.",
+  "action.restore": "복원",
+  "action.delete": "삭제",
+  "menu.confirmDelete": "영구 삭제",
+  "close": "닫기"
+}

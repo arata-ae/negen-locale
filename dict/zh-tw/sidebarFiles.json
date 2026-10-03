@@ -11,5 +11,9 @@
   "error.notFound": "這個目錄不在了。可能已被移動或刪除。",
   "error.outsideWorkspace": "這個目錄在工作區之外，側邊欄不會讀取它。",
   "error.notDirectory": "這不是一個目錄。",
-  "error.unavailable": "讀取失敗：{message}"
+  "error.unavailable": "讀取失敗：{message}",
+  "shortcut.noSession": "請先選擇會話",
+  "autoRefresh": "自動重新整理",
+  "autoRefresh.enable": "開啟自動重新整理",
+  "autoRefresh.disable": "關閉自動重新整理"
 }

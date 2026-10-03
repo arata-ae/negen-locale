@@ -29,40 +29,16 @@ import { readdir, readFile, writeFile } from 'node:fs/promises'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { convertZhTw } from '../src/client/convert.ts'
-import { extractDictionaries, readOwnDictionary } from './lib/extract-dicts.mjs'
+import { extractDictionaries } from './lib/extract-dicts.mjs'
 import { needsCuration } from './lib/zh-tw-terms.mjs'
 import { checkoutCommit, checkoutTag, harnessRoot } from './lib/harness.mjs'
-import { LOCALE_DIRS, OWNED_NAMESPACES } from './assemble-dicts.mjs'
+import { LOCALE_DIRS } from './assemble-dicts.mjs'
+import { FOREIGN_PACKAGES, foreignSources } from './lib/foreign.mjs'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const snapshotPath = join(root, 'dict', 'upstream.snapshot.json')
 
-/**
- * Namespaces this plugin registers from TypeScript rather than back-filling
- * from `dict/`, because it owns them outright: it replaced the upstream
- * plugin that declared them. Their dictionaries are compile-checked against
- * the en key set, so they never carry a key of their own invention — but
- * upstream can still add one, which is exactly what this gate must see.
- */
-const OWNED = {
-  'common': join(root, 'src', 'locales'),
-  'settings.locale': join(root, 'src', 'locales', 'settings.ts'),
-}
-if (Object.keys(OWNED).join() !== OWNED_NAMESPACES.join()) {
-  throw new Error('OWNED and OWNED_NAMESPACES disagree about which namespaces src/locales/ registers')
-}
-
-/**
- * Locale id to the identifier its dictionary is exported under. Only ids that
- * are not valid identifiers need an entry — `zh-TW` cannot be an export name,
- * so the source spells it `zhTW`.
- */
-const OWNED_EXPORT = { 'zh-TW': 'zhTW' }
-
-/** Locale id to the source file basename under src/locales/. */
-const OWNED_FILE = { 'zh-TW': 'zh-tw' }
-
-/** Read this repository's own corpus: locale id -> namespace -> key -> text. */
+/** Read this repository's corpus: locale id -> namespace -> key -> text. */
 async function readCorpus() {
   const corpus = {}
   for (const [dir, id] of Object.entries(LOCALE_DIRS)) {
@@ -73,24 +49,22 @@ async function readCorpus() {
       corpus[id][file.slice(0, -'.json'.length)] = JSON.parse(await readFile(join(localeRoot, file), 'utf8'))
     }
   }
-  for (const [ns, path] of Object.entries(OWNED)) {
-    for (const id of Object.keys(corpus)) {
-      const file = path.endsWith('.ts') ? path : join(path, `${OWNED_FILE[id] ?? id}.ts`)
-      if (!existsSync(file)) continue
-      const entries = await readOwnDictionary(file, OWNED_EXPORT[id] ?? id)
-      if (Object.keys(entries).length > 0) corpus[id][ns] = entries
-    }
-  }
   return corpus
 }
 
 const harness = harnessRoot(root)
+const foreign = foreignSources(root)
+/** Sibling packages whose checkout this run could not find. */
+const unresolved = new Set(FOREIGN_PACKAGES
+  .filter(entry => !foreign.some(found => found.package === entry.package))
+  .map(entry => entry.package))
 const forkPoint = JSON.parse(await readFile(join(root, 'fork-point.json'), 'utf8'))
 const commit = checkoutCommit(harness) ?? 'unknown'
 const atForkPoint = commit === forkPoint.commit
 console.log(`checkout:   ${harness}`)
 console.log(`commit:     ${commit.slice(0, 12)}${atForkPoint ? ` (${forkPoint.tag})` : ` — NOT the fork point ${forkPoint.commit.slice(0, 12)}`}`)
-const { namespaces, unreadable } = await extractDictionaries(harness)
+for (const entry of foreign) console.log(`sibling:    ${entry.package} (${entry.root})`)
+const { namespaces, unreadable } = await extractDictionaries(harness, foreign)
 
 if (process.argv.includes('--write')) {
   // Recording from a checkout that is not the fork point bakes another
@@ -131,8 +105,15 @@ function translatedIn(ns, key) {
 for (const [ns, recorded] of Object.entries(snapshot.namespaces)) {
   const live = namespaces[ns]
   if (live === undefined) {
+    // A namespace owned by a sibling package is absent for two very different
+    // reasons: its checkout was not found, or its owner really did retire it.
+    // Reporting the first as the second is what invites deleting a live
+    // corpus, so a package this run never read is a note rather than a failure.
+    const unread = unresolved.has(recorded.package)
     const stranded = Object.keys(corpus).filter(id => corpus[id][ns] !== undefined)
-    if (stranded.length > 0) {
+    if (unread) {
+      reports.push(`namespace "${ns}" (${recorded.package}) was not read: no checkout found for it — set DSH_FOREIGN_DIRS or keep it beside this repository`)
+    } else if (stranded.length > 0) {
       failures.push(`namespace "${ns}" is gone upstream, but ${stranded.join(', ')} still carry translations for it`)
     } else {
       reports.push(`namespace "${ns}" is gone upstream (nothing translated it)`)
@@ -249,7 +230,7 @@ if (unreadable.length > 0) {
 }
 
 if (reports.length > 0) {
-  console.log(`\nto do (${added} untranslated key(s)):`)
+  console.log(added > 0 ? `\nto do (${added} untranslated key(s)):` : '\nnotes:')
   for (const report of reports) console.log(`  - ${report}`)
 }
 

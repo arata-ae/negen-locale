@@ -1,8 +1,19 @@
 {
   "chip.on.aria": "plan mode オン、押すとオフになります",
   "chip.on.title": "plan mode オン — クリックでオフ（/plan off）",
-  "chip.off.aria": "plan mode オフ、押すとオンになります",
-  "chip.off.title": "plan mode オフ — クリックでオン（/plan）",
   "chip.label": "プラン",
-  "chip.exitFailed": "プランモードを終了できませんでした"
+  "chip.exitFailed": "プランモードを終了できませんでした",
+  "preview.title": "プラン",
+  "preview.document": "プラン · Markdown",
+  "preview.action": "開く",
+  "preview.open": "サイドバーでプランを開く",
+  "preview.full": "プラン全体を表示",
+  "preview.openNamed": "プランを開く：{title}",
+  "preview.loading": "プランを読み込み中…",
+  "preview.failed": "プランを読み込めませんでした",
+  "preview.invalidAddress": "プランアドレスが無効です",
+  "preview.historyUnavailable": "セッション履歴は利用できません",
+  "preview.notFound": "このプランは見つかりません",
+  "preview.unavailable": "プランプレビューは利用できません",
+  "preview.expired": "一時的なプランプレビューの有効期限が切れました。承認待ちのカードから再度開いてください。"
 }

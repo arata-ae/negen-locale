@@ -14,9 +14,12 @@
   "action.reload": "再読み込み",
   "warning.groupLoad": "{name} を読み込めませんでした: {message}",
   "empty.models": "利用できるモデルがありません。",
-  "blocked.composer": "このモデルは利用できません。別のモデルを選択してください",
   "empty.efforts": "このモデルには推論の深さの選択肢がありません。",
-  "option.deepseekV4Flash.description": "高速・高効率・低コスト。目的が明確なタスク、定型業務、並列タスクに適しています。",
-  "option.deepseekV4Pro.description": "エージェント型コーディング・知識・高度な推論がより強力。複雑なタスクや品質重視のタスクに適しますが、コストは高めです。",
-  "trigger.loading": "モデルを読み込み中…"
+  "trigger.loading": "モデルを読み込み中…",
+  "provider.account": "DeepSeek アカウント",
+  "command.label": "モデル",
+  "error.sessionInUse": "このセッションは既に使用中です。別の DSH インスタンス（dsh web やデスクトップアプリなど）が実行されている可能性があります。他の DSH インスタンスを終了してから再試行してください。",
+  "search.placeholder": "モデルを検索…",
+  "search.clear": "検索をクリア",
+  "search.empty": "一致するモデルがありません。"
 }

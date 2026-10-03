@@ -19,5 +19,18 @@
   "dock.drop.top": "위에 분할 추가",
   "dock.drop.bottom": "아래에 분할 추가",
   "tab.guide.title": "시작",
-  "tab.unavailable": "이런 종류의 콘텐츠를 볼 수 있는 방법이 아직 없습니다."
+  "tab.unavailable": "이런 종류의 콘텐츠를 볼 수 있는 방법이 아직 없습니다.",
+  "command.close": "현재 페이지 또는 창 닫기",
+  "command.refresh": "현재 페이지 새로 고침",
+  "command.noRefresh": "이 페이지는 새로 고침할 수 없습니다",
+  "command.toggle": "오른쪽 사이드바 열기/접기",
+  "command.fullscreen": "패널 전체 화면 전환",
+  "command.noSession": "세션을 먼저 선택하세요",
+  "command.noFocus": "오른쪽 사이드바 패널에 먼저 포커스하세요",
+  "command.stale": "페이지가 바뀌었습니다. 다시 포커스하세요",
+  "command.collapsed": "오른쪽 사이드바를 먼저 여세요",
+  "command.float": "플로팅 패널에서는 이 작업을 사용할 수 없습니다",
+  "command.empty": "페이지를 먼저 여세요",
+  "command.budget": "패널은 최대 두 개입니다",
+  "command.width": "너비가 부족해 분할할 수 없습니다. 사이드바를 넓히세요"
 }

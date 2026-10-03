@@ -34,5 +34,9 @@
   "moduleLabel": "モジュール",
   "fromPreset": "提供元",
   "condition": "無効になる条件",
-  "runtime": "状態"
+  "runtime": "状態",
+  "clientSyncing": "このページのプラグインを同期中…",
+  "clientSyncFailed": "このページでは一部のプラグインを同期できませんでした。ホスト側の有効状態は変わりません。",
+  "clientSyncRetry": "このページを再試行",
+  "metadataError": "パッケージメタデータエラー: {error}"
 }
